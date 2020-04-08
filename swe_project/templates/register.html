@@ -33,31 +33,35 @@
                                         <form class="user" style="padding-top: 12px;">
                                             <div class="form-group row">
                                                 <div class="col-sm-6 mb-3 mb-sm-0">
+                                                    
                                                     <!--Student First Name-->
                                                     {{form.first_name.label}}
-                                                    {{form.first_name}}
+                                                    {{form.first_name(class="form-control form-control-user")}}
+                                                </input>
+
                                                 </div>
                                                 <div class="col-sm-6">
                                                      <!--Student Last Name-->
                                                      {{form.last_name.label}}
-                                                     {{form.last_name}}
+                                                     {{form.last_name(class="form-control form-control-user")}}
                                                 </div>
                                             </div>
                                             <div class="form-group">
+                                                    <div class="col-sm-6">
                                                 <!--Student Email-->
                                                 {{form.email.label}}
-                                                {{form.email}}
+                                                {{form.email(class="form-control form-control-user")}}</div>
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                                     <!--Student Password-->
                                                 {{form.password.label}}
-                                                {{form.password}}
+                                                {{form.password(class="form-control form-control-user")}}
                                                 </div>
                                                 <div class="col-sm-6">
                                                      <!--Student Confirm Password-->
                                                 {{form.confirm_password.label}}
-                                                {{form.confirm_password}}
+                                                {{form.confirm_password(class="form-control form-control-user")}}
                                                 </div>
                                             </div><select class="form-control" style="padding-bottom: 0;"><optgroup label="Choose university"><option value="12" selected>American University of Sharjah (AUS)</option><option value="13">University of Sharjah (UOS)</option></optgroup></select><button class="btn btn-primary btn-block text-white btn-user" type="submit" style="margin-top: 12px;">Register Student Account</button>
                                             <hr>
@@ -70,29 +74,29 @@
                                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                                      <!--Faculty First Name-->
                                                      {{form.first_name.label}}
-                                                     {{form.first_name}}
+                                                     {{form.first_name(class="form-control form-control-user")}}
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <!--Faculty Last Name-->
                                                     {{form.last_name.label}}
-                                                    {{form.last_name}}
+                                                    {{form.last_name(class="form-control form-control-user")}}
                                                 </div>
                                             </div>
                                             <div class="form-group">
                                                  <!--Faculty Email-->
                                                  {{form.email.label}}
-                                                 {{form.email}}
+                                                 {{form.email(class="form-control form-control-user")}}
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                                     <!--Faculty Password-->
                                                 {{form.password.label}}
-                                                {{form.password}}
+                                                {{form.password(class="form-control form-control-user")}}
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <!--Faculty Confirm Password-->
                                                 {{form.confirm_password.label}}
-                                                {{form.confirm_password}}
+                                                {{form.confirm_password(class="form-control form-control-user")}}
 
                                                 </div>
                                             </div><select class="form-control"><optgroup label="Choose univerity"><option value="12" selected>American University of Sharjah (AUS)</option><option value="13">University of Sharjah (UOS)</option></optgroup></select><button class="btn btn-primary btn-block text-white btn-user" type="submit" style="margin-top: 12px;">Register Faculty Account</button>

@@ -4,19 +4,19 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo
 
 class UserRegistrationForm(FlaskForm):
     #Things to add- email,pass,university_id,firstname,lastname
-    first_name= StringField('First Name 1',validators=[DataRequired(),Length(max=20)])
-    last_name= StringField('Last Name 1',validators=[DataRequired(),Length(max=20)])
-    email=StringField('Email 1 ', validators=[Email(),DataRequired(),Length(max=40)])
-    password=PasswordField('Password 1',validators=[DataRequired()])
-    confirm_password=PasswordField('Confirm Passoword 1', validators=[DataRequired(),EqualTo('password')])
-    submit = SubmitField('Sign Up 1')
+    first_name= StringField('First Name',validators=[DataRequired(),Length(max=20)])
+    last_name= StringField('Last Name',validators=[DataRequired(),Length(max=20)])
+    email=StringField('Email ', validators=[Email(),DataRequired(),Length(max=40)])
+    password=PasswordField('Password',validators=[DataRequired()])
+    confirm_password=PasswordField('Confirm Passoword', validators=[DataRequired(),EqualTo('password')])
+    submit = SubmitField('Sign Up')
 
 class LoginForm(FlaskForm):
-    email = StringField('Email 1',
+    email = StringField('Email',
                         validators=[DataRequired(), Email()])
-    password = PasswordField('Password 1', validators=[DataRequired()])
-    remember = BooleanField('Remember Me 1')
-    submit = SubmitField('Login 1')
+    password = PasswordField('Password', validators=[DataRequired()])
+    remember = BooleanField('Remember Me')
+    submit = SubmitField('Login')
 
     
     
