@@ -4,13 +4,22 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Register - Brand</title>
+    <title>Register - User</title>
     <link rel="stylesheet" href="static/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="static/assets/fonts/fontawesome-all.min.css">
 </head>
 
 <body class="bg-gradient-primary">
+    {% with messages= get_flashed_messages(with_categories=true) %}
+        {%if messages%}
+        {%for category,message in messages%}
+        <div class='alert alert-{{category}}'>
+            {{message}}
+        </div>
+        {%endfor%}
+        {%endif%}
+    {% endwith%}
     <div class="container">
         <div class="card shadow-lg o-hidden border-0 my-5">
             <div class="card-body p-0">
@@ -30,7 +39,7 @@
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane" role="tabpanel" id="tab-1">
-                                        <form class="user" style="padding-top: 12px;">
+                                            <form method="POST" action="">
                                             <div class="form-group row">
                                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                                     
@@ -46,7 +55,7 @@
                                                      {{form.last_name(class="form-control form-control-user")}}
                                                 </div>
                                             </div>
-                                            <div class="form-group">
+                                            <div class="form-group row ">
                                                     <div class="col-sm-6">
                                                 <!--Student Email-->
                                                 {{form.email.label}}
@@ -63,44 +72,65 @@
                                                 {{form.confirm_password.label}}
                                                 {{form.confirm_password(class="form-control form-control-user")}}
                                                 </div>
-                                            </div><select class="form-control" style="padding-bottom: 0;"><optgroup label="Choose university"><option value="12" selected>American University of Sharjah (AUS)</option><option value="13">University of Sharjah (UOS)</option></optgroup></select><button class="btn btn-primary btn-block text-white btn-user" type="submit" style="margin-top: 12px;">Register Student Account</button>
+                                            </div><select class="form-control" style="padding-bottom: 0;"><optgroup label="Choose university"><option value="12" selected>American University of Sharjah (AUS)</option><option value="13">University of Sharjah (UOS)</option></optgroup></select>
+                                            
+                                                <div class="form-group align-middle">
+                                                    <div class="align-middle">
+                                                            <!--Submit Button Option-->
+                                                            {{ form.submit(class="btn btn-outline-info") }}
+                                                    </div>
+                                                        
+                                                    </div>
                                             <hr>
                                             <hr>
                                         </form>
                                     </div>
                                     <div class="tab-pane active" role="tabpanel" id="tab-2">
-                                        <form class="user" style="padding-top: 12px;">
                                             <div class="form-group row">
-                                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                                     <!--Faculty First Name-->
-                                                     {{form.first_name.label}}
-                                                     {{form.first_name(class="form-control form-control-user")}}
+                                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                                        
+                                                        <!--Faculty First Name-->
+                                                        {{form.first_name.label}}
+                                                        {{form.first_name(class="form-control form-control-user")}}
+                                                    </input>
+    
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                         <!--Fculty Last Name-->
+                                                         {{form.last_name.label}}
+                                                         {{form.last_name(class="form-control form-control-user")}}
+                                                    </div>
                                                 </div>
-                                                <div class="col-sm-6">
-                                                    <!--Faculty Last Name-->
-                                                    {{form.last_name.label}}
-                                                    {{form.last_name(class="form-control form-control-user")}}
+                                                <div class="form-group row ">
+                                                        <div class="col-sm-6">
+                                                    <!--Faculty Email-->
+                                                    {{form.email.label}}
+                                                    {{form.email(class="form-control form-control-user")}}</div>
                                                 </div>
-                                            </div>
-                                            <div class="form-group">
-                                                 <!--Faculty Email-->
-                                                 {{form.email.label}}
-                                                 {{form.email(class="form-control form-control-user")}}
-                                            </div>
-                                            <div class="form-group row">
-                                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                                    <!--Faculty Password-->
-                                                {{form.password.label}}
-                                                {{form.password(class="form-control form-control-user")}}
-                                                </div>
-                                                <div class="col-sm-6">
-                                                    <!--Faculty Confirm Password-->
-                                                {{form.confirm_password.label}}
-                                                {{form.confirm_password(class="form-control form-control-user")}}
-
-                                                </div>
-                                            </div><select class="form-control"><optgroup label="Choose univerity"><option value="12" selected>American University of Sharjah (AUS)</option><option value="13">University of Sharjah (UOS)</option></optgroup></select><button class="btn btn-primary btn-block text-white btn-user" type="submit" style="margin-top: 12px;">Register Faculty Account</button>
-                                            <hr>
+                                                <div class="form-group row">
+                                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                                        <!--Faculty Password-->
+                                                    {{form.password.label}}
+                                                    {{form.password(class="form-control form-control-user")}}
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                         <!--Faculty Confirm Password-->
+                                                    {{form.confirm_password.label}}
+                                                    {{form.confirm_password(class="form-control form-control-user")}}
+                                                    </div>
+                                                </div><select class="form-control" style="padding-bottom: 0;"><optgroup label="Choose university"><option value="12" selected>American University of Sharjah (AUS)</option><option value="13">University of Sharjah (UOS)</option></optgroup></select>
+                                                
+                                                    <div class="form-group align-middle">
+                                                        <div class="align-middle">
+                                                                <!--Faculty Button Option-->
+                                                                {{ form.submit(class="btn btn-outline-info") }}
+                                                        </div>
+                                                            
+                                                        </div>
+                                                <hr>
+                                                <hr>
+                                            </form>
+                                        </div>
                                         </form>
                                     </div>
                                 </div>
