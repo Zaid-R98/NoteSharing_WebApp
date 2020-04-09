@@ -11,7 +11,7 @@
 </head>
 
 <body class="bg-gradient-primary">
-    {% with messages= get_flashed_messages(with_categories=true) %}
+        {% with messages= get_flashed_messages(with_categories=true) %}
         {%if messages%}
         {%for category,message in messages%}
         <div class='alert alert-{{category}}'>
@@ -38,8 +38,11 @@
                                     <li class="nav-item"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-2">Faculty</a></li>
                                 </ul>
                                 <div class="tab-content">
+                                        {{form.hidden_tag()}}
                                     <div class="tab-pane" role="tabpanel" id="tab-1">
+                                            {{form.hidden_tag()}}
                                             <form method="POST" action="">
+                                                    {{form.hidden_tag()}}
                                             <div class="form-group row">
                                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                                     
@@ -76,7 +79,7 @@
                                             
                                                 <div class="form-group align-middle">
                                                     <div class="align-middle">
-                                                            <!--Submit Button Option-->
+                                                            <!--Submit Student Button Option-->
                                                             {{ form.submit(class="btn btn-outline-info") }}
                                                     </div>
                                                         
@@ -85,7 +88,11 @@
                                             <hr>
                                         </form>
                                     </div>
+                                    {{form.hidden_tag()}}
                                     <div class="tab-pane active" role="tabpanel" id="tab-2">
+                                            
+                                             <form method="POST" action="">
+                                                    {{form.hidden_tag()}}
                                             <div class="form-group row">
                                                     <div class="col-sm-6 mb-3 mb-sm-0">
                                                         
@@ -122,11 +129,11 @@
                                                 
                                                     <div class="form-group align-middle">
                                                         <div class="align-middle">
-                                                                <!--Faculty Button Option-->
+                                                                <!--Submit Faculty Button Option-->
                                                                 {{ form.submit(class="btn btn-outline-info") }}
-                                                        </div>
-                                                            
-                                                        </div>
+                                                        </div>  
+
+                                                    </div>
                                                 <hr>
                                                 <hr>
                                             </form>

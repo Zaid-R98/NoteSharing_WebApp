@@ -25,4 +25,10 @@ def register():
     print(form.confirm_password.data)
     print(form.submit.data)
     print(form.email.data)
+    print(form.errors.items())
+
+
+
+
+
     return render_template('register.html',form=form)
