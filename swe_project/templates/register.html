@@ -136,12 +136,17 @@
                                             {{form.confirm_password(class="form-control form-control-user")}}
                                             {%endif%} 
                                                 </div>
-                                            </div><select class="form-control" style="padding-bottom: 0;"><optgroup label="Choose university"><option value="12" selected>American University of Sharjah (AUS)</option><option value="13">University of Sharjah (UOS)</option></optgroup></select>
+                                            </div>
+                                            <!--Choosing The University-->
+                                                   <h5>
+                                                       Choose University-
+                                                   </h5>
+                                                    {{form.university_chosen(class="form-control padding-bottom")}}
                                             
                                                 <div class="form-group align-middle">
                                                     <div class="align-middle">
                                                             <!--Submit Student Button Option-->
-                                                            {{ form.submit(class="btn btn-outline-info") }}
+                                                            {{ form.submit(class="btn btn-outline-info align-middle") }}
                                                     </div>
                                                         
                                                     </div>
@@ -253,7 +258,13 @@
                                                         {{form.confirm_password(class="form-control form-control-user")}}
                                                         {%endif%} 
                                                             </div>
-                                                        </div><select class="form-control" style="padding-bottom: 0;"><optgroup label="Choose university"><option value="12" selected>American University of Sharjah (AUS)</option><option value="13">University of Sharjah (UOS)</option></optgroup></select>
+                                                        </div>
+                                                             <!--Choosing The University-->
+                                                            <h5>
+                                                                Choose University-
+                                                             </h5>
+                                                            {{form.university_chosen(class="form-control padding-bottom")}}
+                                                            
                                                         
                                                             <div class="form-group align-middle">
                                                                 <div class="align-middle">

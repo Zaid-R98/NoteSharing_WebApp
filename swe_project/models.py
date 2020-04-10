@@ -21,8 +21,8 @@ class Student(db.Model):
     user_id=db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)
     firstname=db.Column(db.String(20),nullable=False)
     lastname=db.Column(db.String(20),nullable=False)
-    #age=db.Column(db.Integer,nullable=False)
     academic_level=db.Column(db.String(30),nullable=False)
+    
 
 class Faculty(db.Model):
     faculty_id=db.Column(db.Integer,primary_key=True)
