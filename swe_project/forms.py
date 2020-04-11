@@ -14,12 +14,17 @@ def Emailcheck(FlaskForm,field):
     else:
         raise ValidationError("The email does not end with .edu")
 
+def EmailRepeatCheck(FlaskForm,field):
+    user=User.query.filter_by(email=field.data)
+    if user:
+        raise ValidationError('The User email already exists in the system...')
+
 
 class UserRegistrationForm(FlaskForm):
     #Things to add- email,pass,university_id,firstname,lastname
     first_name= StringField('First Name',validators=[DataRequired(),Length(max=20),Namecheck])
     last_name= StringField('Last Name',validators=[DataRequired(),Length(max=20),Namecheck])
-    email=StringField('Email ', validators=[Email(),DataRequired(),Length(max=40),Emailcheck])
+    email=StringField('Email ', validators=[Email(),DataRequired(),Length(max=40),Emailcheck,EmailRepeatCheck])
     password=PasswordField('Password',validators=[DataRequired()])
     confirm_password=PasswordField('Confirm Passoword', validators=[DataRequired(),EqualTo('password')])
     university_chosen=SelectField(coerce=int)
