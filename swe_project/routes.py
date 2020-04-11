@@ -10,19 +10,25 @@ def login():
         flash(f'Account has been logged in for {form.first_name.data} ', 'success')
     return render_template('login.html',form=form)
 
-@app.route("/register",methods=['GET','POST'])
-def register():
+
+
+@app.route("/register-student",methods=['GET','POST'])
+def registerStudent():
     form=UserRegistrationForm()
-    
     if form.validate_on_submit():
         flash(f'Account has been created for {form.first_name.data}', 'success')
     else:
         print("Form has not been validated!") #data being inputted fine now.
-    form.university_chosen.choices=[('OPTION 1 UNI','AUS'), ('OPTION 2 UNI','AUD'),('OPTION3', 'Radom University')]
-    #When connected to Database Have to do this->
-    # form.university_choices=[(University.id,University.name) for Uni in University.query.all()]
-    #if doubt- watch video here-  https://www.youtube.com/watch?v=I2dJuNwlIH0
-    #sample on how to print here...
-    print(form.first_name.data)
-    #Passing the render template command.
-    return render_template('register.html',form=form)
+        print(form.errors)
+    return render_template('register_student.html',form=form)
+
+
+@app.route("/register-faculty",methods=['GET','POST'])
+def registerFaculty():
+    form=UserRegistrationForm()
+    if form.validate_on_submit():
+        flash(f'Account has been created for {form.first_name.data}', 'success')
+    else:
+        print("Form has not been validated!") #data being inputted fine now.
+        print(form.errors)
+    return render_template('register_faculty.html',form=form)

@@ -8,10 +8,10 @@ class User(db.Model):
     email=db.Column(db.String(40),nullable=False,unique=True)
     university_id=db.Column(db.Integer,nullable=False)
     st_fa=db.Column(db.Boolean,nullable=False) #True if Faculty
+    uni_admin_check=db.Column(db.Boolean,nullable=False)#True if Uniadmin
 
 class Uni_admin(db.Model):
     uni_ad_id=db.Column(db.Integer,primary_key=True)#admin id
-    uni_id=db.Column(db.Integer,db.ForeignKey('university.id'),nullable=False)
     user_id=db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)
     firstname=db.Column(db.String(20),nullable=False)
     lastname=db.Column(db.String(20),nullable=False)
@@ -21,7 +21,7 @@ class Student(db.Model):
     user_id=db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)
     firstname=db.Column(db.String(20),nullable=False)
     lastname=db.Column(db.String(20),nullable=False)
-    academic_level=db.Column(db.String(30),nullable=False)
+    #academic_level=db.Column(db.String(30),nullable=False)
     
 
 class Faculty(db.Model):

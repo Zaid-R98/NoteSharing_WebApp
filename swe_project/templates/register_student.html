@@ -4,12 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Register - User</title>
+    <title>Register Student</title>
     <link rel="stylesheet" href="static/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="static/assets/fonts/fontawesome-all.min.css">
-</head>
-
+</head> 
+                                            
 <body class="bg-gradient-primary">
         {% with messages= get_flashed_messages(with_categories=true) %}
         {%if messages%}
@@ -30,145 +30,16 @@
                     <div class="col-lg-7">
                         <div class="p-5">
                             <div class="text-center">
-                                <h4 class="text-dark mb-4">Create an Account</h4>
+                                <h4 class="text-dark mb-4">Create a Student Account</h4>
                             </div>
-                            <div>
-                                <ul class="nav nav-tabs">
-                                    <li class="nav-item"><a class="nav-link" role="tab" data-toggle="tab" href="#tab-1">Student</a></li>
-                                    <li class="nav-item"><a class="nav-link active" role="tab" data-toggle="tab" href="#tab-2">Faculty</a></li>
-                                </ul>
-                                <div class="tab-content">
-                                        {{form.hidden_tag()}}
-                                    <div class="tab-pane" role="tabpanel" id="tab-1">
-                                            {{form.hidden_tag()}}
+                            <div>                                      
+                                            
                                             <form method="POST" action="">
-                                                    {{form.hidden_tag()}}
-                                            <div class="form-group row">
-                                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                                    
-                                                    <!--Student First Name-->
-                                                    {{form.first_name.label}}
-                                                    {%if form.first_name.errors%}
-                                                    {{form.first_name(class="form-control form-control-lg is-invalid")}}
-                                                <div class="invalid-feedback">
-                                                    {% for error in form.first_name.errors%}
-                                                    <span>
-                                                        {{error}}
-                                                    </span>
-                                                    {%endfor%}
-                                                </div>
-                                                {%else%}
-                                                {{form.first_name(class="form-control form-control-user")}}
-                                                {%endif%} 
-                                                </input>
-
-                                                </div>
-                                                <div class="col-sm-6">
-                                                     <!--Student Last Name-->
-                                                     {{form.last_name.label}}
-                                                     {%if form.last_name.errors%}
-                                                     {{form.last_name(class="form-control form-control-lg is-invalid")}}
-                                                 <div class="invalid-feedback">
-                                                     {% for error in form.last_name.errors%}
-                                                     <span>
-                                                         {{error}}
-                                                     </span>
-                                                     {%endfor%}
-                                                 </div>
-                                                 {%else%}
-                                                 {{form.last_name(class="form-control form-control-user")}}
-                                                 {%endif%} 
-                                                </div>
-                                            </div>
-                                            <div class="form-group row ">
-                                                    <div class="col-sm-6">
-                                                <!--Student Email-->
-                                                {{form.email.label}}
-
-                                                
-                                                {%if form.email.errors%}
-                                                {{form.email(class="form-control form-control-lg is-invalid")}}
-                                                <div class="invalid-feedback">
-                                                {% for error in form.email.errors%}
-                                                <span>
-                                                    {{error}}
-                                                </span>
-                                                {%endfor%}
-                                                </div>
-                                            {%else%}
-                                            {{form.email(class="form-control form-control-user")}}
-                                            {%endif%} 
-                                            </div>
-                                        </div>
-
-    
-                                       
-                                            <div class="form-group row">
-                                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                                    <!--Student Password-->
-                                                {{form.password.label}}
-                                                {%if form.password.errors%}
-                                                {{form.password(class="form-control form-control-lg is-invalid")}}
-                                            <div class="invalid-feedback">
-                                                {% for error in form.password.errors%}
-                                                <span>
-                                                    {{error}}
-                                                </span>
-                                                {%endfor%}
-                                            </div>
-                                            {%else%}
-                                            {{form.password(class="form-control form-control-user")}}
-                                            {%endif%} 
-                                                </div>
-                                                <div class="col-sm-6">
-                                                     <!--Student Confirm Password-->
-                                                {{form.confirm_password.label}}
-                                                {%if form.confirm_password.errors%}
-                                                {{form.confirm_password(class="form-control form-control-lg is-invalid")}}
-                                            <div class="invalid-feedback">
-                                                {% for error in form.confirm_password.errors%}
-                                                <span>
-                                                    {{error}}
-                                                </span>
-                                                {%endfor%}
-                                            </div>
-                                            {%else%}
-                                            {{form.confirm_password(class="form-control form-control-user")}}
-                                            {%endif%} 
-                                                </div>
-                                            </div>
-                                            <!--Choosing The University-->
-                                                   <h5>
-                                                       Choose University-
-                                                   </h5>
-                                                    {{form.university_chosen(class="form-control padding-bottom")}}
-                                            
-                                                <div class="form-group align-middle">
-                                                    <div class="align-middle">
-                                                            <!--Submit Student Button Option-->
-                                                            {{ form.submit(class="btn btn-outline-info align-middle") }}
-                                                    </div>
-                                                        
-                                                    </div>
-                                            <hr>
-                                            <hr>
-                                        </form>
-                                    </div>
-
-
-
-                                    <!--THE FOLLOWING TAB IS FOR FACULTY-->
-
-
-                                    {{form.hidden_tag()}}
-                                    <div class="tab-pane active" role="tabpanel" id="tab-2">
-                                            
-                                             <form method="POST" action="">
                                                     {{form.hidden_tag()}}
                                                     <div class="form-group row">
                                                             <div class="col-sm-6 mb-3 mb-sm-0">
                                                                 
-                                                                <!--Faculty First Name-->
+                                                                <!--Student First Name-->
                                                                 {{form.first_name.label}}
                                                                 {%if form.first_name.errors%}
                                                                 {{form.first_name(class="form-control form-control-lg is-invalid")}}
@@ -186,7 +57,7 @@
             
                                                             </div>
                                                             <div class="col-sm-6">
-                                                                 <!--Faculty Last Name-->
+                                                                 <!--Student Last Name-->
                                                                  {{form.last_name.label}}
                                                                  {%if form.last_name.errors%}
                                                                  {{form.last_name(class="form-control form-control-lg is-invalid")}}
@@ -204,7 +75,7 @@
                                                         </div>
                                                         <div class="form-group row ">
                                                                 <div class="col-sm-6">
-                                                            <!--faculty Email-->
+                                                            <!--Student Email-->
                                                             {{form.email.label}}
             
                                                             
@@ -227,7 +98,7 @@
                                                    
                                                         <div class="form-group row">
                                                             <div class="col-sm-6 mb-3 mb-sm-0">
-                                                                <!--Faculty Password-->
+                                                                <!--Student Password-->
                                                             {{form.password.label}}
                                                             {%if form.password.errors%}
                                                             {{form.password(class="form-control form-control-lg is-invalid")}}
@@ -243,7 +114,7 @@
                                                         {%endif%} 
                                                             </div>
                                                             <div class="col-sm-6">
-                                                                 <!--Faculty Confirm Password-->
+                                                                 <!--Student Confirm Password-->
                                                             {{form.confirm_password.label}}
                                                             {%if form.confirm_password.errors%}
                                                             {{form.confirm_password(class="form-control form-control-lg is-invalid")}}
@@ -268,7 +139,7 @@
                                                         
                                                             <div class="form-group align-middle">
                                                                 <div class="align-middle">
-                                                                        <!--Faculty Student Button Option-->
+                                                                        <!--Student Student Button Option-->
                                                                         {{ form.submit(class="btn btn-outline-info") }}
                                                                 </div>
                                                                     
@@ -279,23 +150,24 @@
                                             </form>
                                         </div>
                                         </form>
+                                        <div class="text-center"><a class="small" href="forgot-password.html">Forgot Password?</a></div>
+                                        <div class="text-center"><a class="small" href="login.html">Already have an account? Login!</a></div>
+                                        <div class="text-center"><a class="small" href="{{ url_for('registerFaculty') }}"> Faculty Registration?</a></div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="text-center"><a class="small" href="forgot-password.html">Forgot Password?</a></div>
-                            <div class="text-center"><a class="small" href="login.html">Already have an account? Login!</a></div>
                         </div>
                     </div>
                 </div>
-            </div>
+                <script src="static/assets/js/jquery.min.js"></script>
+                <script src="static/assets/bootstrap/js/bootstrap.min.js"></script>
+                <script src="static/assets/js/chart.min.js"></script>
+                <script src="static/assets/js/bs-init.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+                <script src="static/assets/js/theme.js"></script>
+            </body>
+            
+            </html>
         </div>
     </div>
-    <script src="static/assets/js/jquery.min.js"></script>
-    <script src="static/assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="static/assets/js/chart.min.js"></script>
-    <script src="static/assets/js/bs-init.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
-    <script src="static/assets/js/theme.js"></script>
-</body>
-
-</html>
+</div>
