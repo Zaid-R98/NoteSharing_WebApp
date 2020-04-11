@@ -65,4 +65,12 @@ def addUserFaculty(form):
     db.session.add(faculty)
     db.session.commit()
 
+@app.route("/profile", methods=['GET','POST'])
+def profile():
+    return render_template('profile.html')
+
+@app.route("/registeredcourses", methods=['GET','POST'])
+def registered():
+    return render_template('registeredCourses.html')
+
 
