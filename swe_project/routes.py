@@ -15,7 +15,10 @@ def login():
 @app.route("/register-student",methods=['GET','POST'])
 def registerStudent():
     form=UserRegistrationForm()
-    form.university_chosen.choices=[(uni.id,uni.name) for uni in University.query.all()]
+    if University.query.first()==None:
+        form.university_chosen.choices=[('0','No University in the System yet..')]
+    else:
+        form.university_chosen.choices=[(uni.id,uni.name) for uni in University.query.all()]
     if form.validate_on_submit():
         flash(f'Account has been created for {form.first_name.data}', 'success')
         addUserStudent(form)
@@ -38,7 +41,10 @@ def addUserStudent(form):
 @app.route("/register-faculty",methods=['GET','POST'])
 def registerFaculty():
     form=UserRegistrationForm()
-    form.university_chosen.choices=[(uni.id,uni.name) for uni in University.query.all()]
+    if University.query.first()==None:
+        form.university_chosen.choices=[('0','No University in the System yet..')]
+    else:
+        form.university_chosen.choices=[(uni.id,uni.name) for uni in University.query.all()]
     if form.validate_on_submit():
         flash(f'Account has been created for {form.first_name.data}', 'success')
         addUserFaculty(form)
@@ -54,3 +60,5 @@ def addUserFaculty(form):
     faculty=Faculty(user_id=user.id,firstname=form.first_name.data,lastname=form.last_name.data)
     db.session.add(faculty)
     db.session.commit()
+
+
