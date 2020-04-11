@@ -6,7 +6,7 @@ class User(db.Model):
     #username=db.Column(db.String(25),nullable=False,unique=True)
     password=db.Column(db.String(150),nullable=False)
     email=db.Column(db.String(40),nullable=False,unique=True)
-    university_id=db.Column(db.Integer,nullable=False)
+    university_id=db.Column(db.Integer,db.ForeignKey('university.id'),nullable=False)
     st_fa=db.Column(db.Boolean,nullable=False) #True if Faculty
     uni_admin_check=db.Column(db.Boolean,nullable=False)#True if Uniadmin
 
