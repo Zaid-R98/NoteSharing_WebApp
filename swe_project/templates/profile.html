@@ -22,27 +22,41 @@
                     <li class="nav-item" role="presentation"><a class="nav-link" href="{{url_for('registeredcourses')}}"><i class="fas fa-table"></i><span>Registered Courses</span></a></li>
                 </ul> 
             </div>
+           
         </nav>
+        <!--My own code starts here.-->
+        <div class="container align-items-center col-sm-8 bg-gradient-white" id="content-wrapper">
+            <div class="row align-items-center">
+                    <ul class="list-group">
+                    {%for uni in University.query.all()%}
+                    
+                     <li class="list-group-item">{{uni.name}}</li>
+                    {%endfor%}
+                    </ul>
+            </div>
+            </div>
+        <!--My own code ends here.-->      
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
                 <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
                     <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>                 
                             </div>
                         </form>
-                        <ul class="nav navbar-nav flex-nowrap ml-auto">
-
-                      <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small">Valerie Luna</span><img class="border rounded-circle img-profile" src="static/assets/img/avatars/avatar1.jpeg"></a>              
-            </div>
-            </nav>
+                       <!--For adding next to the profile picture add here...-->
+                      <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small">Valerie Luna</span><img class="border rounded-circle img-profile" src="static/assets/img/avatars/avatar1.jpeg"></a>     
+                      </div>
+                    </nav>
                     </div>
             </div>
+            </div>
+            
         </div>
         <footer class="bg-white sticky-footer">
             <div class="container my-auto">
                 <div class="text-center my-auto copyright"><span>Copyright © noteSharing 2020 | SK ZR FT ST</span></div>
             </div>
         </footer>
-    </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
+    </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>       
     <script src="static/assets/js/jquery.min.js"></script>
     <script src="static/assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="static/assets/js/chart.min.js"></script>
@@ -50,5 +64,4 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="static/assets/js/theme.js"></script>
 </body>
-
 </html>

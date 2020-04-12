@@ -74,7 +74,7 @@ def addUserFaculty(form):
 
 @app.route("/profile", methods=['GET','POST'])
 def profile():
-    return render_template('profile.html')
+    return render_template('profile.html',University=University)
 
 
 @app.route("/registeredcourses", methods=['GET','POST'])
