@@ -15,7 +15,7 @@ def login():
             return redirect(url_for('profile'))
         else:
             print(form.errors)
-            flash(f'Login has been unsuccessful. Email/password is wrong {form.email.data} ', 'success')
+            flash(f'Login has been unsuccessful. Email/password is wrong {form.email.data} ', 'danger')
             return redirect(url_for('login'))
     else:
         print(form.errors)
