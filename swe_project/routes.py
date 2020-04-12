@@ -4,24 +4,24 @@ from swe_project.forms import UserRegistrationForm,LoginForm
 from swe_project.models import *
 from flask_login import login_user, current_user
 
-
-#from testproject_2.forms import RegistrationForm,LoginForm
-
 @app.route("/", methods=['GET', 'POST'])
 def login():
     form=LoginForm()
-    flash(f'TestFlash ', 'success')
     if form.validate_on_submit():
         user = User.query.filter_by(email = form.email.data).first()
         if user and (user.password == form.password.data):
             print(" SUCCESFULL")
-            flash(f'Account has been logged in for {form.first_name.data} ', 'success')
+            flash(f'Account has been logged in for {form.email.data} ', 'success')
             login_user(user, remember=form.remember.data)
-            return redirect(url_for('register_student.html'))
+            return redirect(url_for('profile'))
         else:
-            flash(f'Login has been unsuccessful. Email/password is wrong {form.first_name.data} ', 'success')
+            print(form.errors)
+            flash(f'Login has been unsuccessful. Email/password is wrong {form.email.data} ', 'success')
             print("NOT SUCCESFULL")
+    else:
+        print(form.errors)
     return render_template('login.html',title ='Login', form=form)
+
 
 @app.route("/register-student",methods=['GET','POST'])
 def registerStudent():
