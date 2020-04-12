@@ -27,6 +27,7 @@
                                         <h4 class="text-dark mb-4">Login</h4>
                                     </div>
                                     <form class="user" method="POST" action="">
+                                        {{ form.csrf_token }}
                                         
                                         <div class="form-group">
                                             {{ form.email.label(class="form-control-label") }}
