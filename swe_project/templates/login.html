@@ -1,4 +1,4 @@
-
+{% block content %}
 <!DOCTYPE html>
 <html>
 
@@ -26,18 +26,49 @@
                                     <div class="text-center">
                                         <h4 class="text-dark mb-4">Login</h4>
                                     </div>
-                                    <form class="user">
-                                        <div class="form-group"><input class="form-control form-control-user" type="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address..." name="email"></div>
-                                        <div class="form-group"><input class="form-control form-control-user" type="password" id="exampleInputPassword" placeholder="Password" name="password"></div>
+                                    <form class="user" method="POST" action="">
+                                        
+                                        <div class="form-group">
+                                            {{ form.email.label(class="form-control-label") }}
+                                            {% if form.email.errors %}
+                                                {{ form.email(class="form-control form-control-user form-control-lg is-invalid") }}
+                                                <div class="invalid-feedback">
+                                                    {% for error in form.email.errors %}
+                                                        <span>{{ error }}</span>
+                                                    {% endfor %}
+                                                </div>
+                                            {% else %}
+                                                {{ form.email(class="form-control form-control-lg") }}
+                                            {% endif %}
+                                        </div>
+                                        <div class="form-group">
+                                            {{ form.password.label(class="form-control-label") }}
+                                            {% if form.password.errors %}
+                                                {{ form.password(class="form-control form-control-user form-control-lg is-invalid") }}
+                                                <div class="invalid-feedback">
+                                                    {% for error in form.password.errors %}
+                                                        <span>{{ error }}</span>
+                                                    {% endfor %}
+                                                </div>
+                                            {% else %}
+                                                {{ form.password(class="form-control form-control-lg") }}
+                                            {% endif %}
+                                        </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
-                                                <div class="form-check"><input class="form-check-input custom-control-input" type="checkbox" id="formCheck-1"><label class="form-check-label custom-control-label" for="formCheck-1">Remember Me</label></div>
+                                                <div class="form-check">
+                                                    {{ form.remember(class="form-check-input") }}
+                                                    {{ form.remember.label(class="form-check-label") }}
+                                                </div>
                                             </div>
-                                        </div><button class="btn btn-primary btn-block text-white btn-user" type="submit">Login</button>
+                                        </div>
+                                        {{ form.submit(class="btn btn-primary btn-block text-white btn-user") }}
                                         <hr>
                                     </form>
+                                
                                     <div class="text-center"><a class="small" href="forgot-password.html">Forgot Password?</a></div>
-                                    <div class="text-center"><a class="small" href="register.html">Create an Account!</a></div>
+                                    <div class="text-center"><a class="small" href="{{ url_for('registerStudent') }}">Create a Student Account!</a></div>
+                                    <div class="text-center"><a class="small" href="{{ url_for('registerFaculty') }}">Create a Faculty Account!</a></div>
                                 </div>
                             </div>
                         </div>
@@ -55,3 +86,4 @@
 </body>
 
 </html>
+{% endblock content %}

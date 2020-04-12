@@ -1,8 +1,11 @@
+
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField,ValidationError,SelectField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 from swe_project import db
 from swe_project.models import *
+
+
 
 def Namecheck(FlaskForm,field): 
     if field.data.isdigit():
@@ -24,7 +27,7 @@ class UserRegistrationForm(FlaskForm):
     #Things to add- email,pass,university_id,firstname,lastname
     first_name= StringField('First Name',validators=[DataRequired(),Length(max=20),Namecheck])
     last_name= StringField('Last Name',validators=[DataRequired(),Length(max=20),Namecheck])
-    email=StringField('Email ', validators=[Email(),DataRequired(),Length(max=40),Emailcheck,EmailRepeatCheck])
+    email=StringField('Email ', validators=[Email(),DataRequired(),Length(max=40),Emailcheck])
     password=PasswordField('Password',validators=[DataRequired()])
     confirm_password=PasswordField('Confirm Passoword', validators=[DataRequired(),EqualTo('password')])
     university_chosen=SelectField(coerce=int)
@@ -40,9 +43,3 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
-
-   
-    
-    
-    
-

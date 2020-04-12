@@ -2,19 +2,26 @@ from flask import render_template, url_for, flash, redirect
 from swe_project import app
 from swe_project.forms import UserRegistrationForm,LoginForm
 from swe_project.models import *
-from flask_login import login_user,current_user
+from flask_login import login_user, current_user
 
 
-
+#from testproject_2.forms import RegistrationForm,LoginForm
 
 @app.route("/", methods=['GET', 'POST'])
 def login():
     form=LoginForm()
+    flash(f'TestFlash ', 'success')
     if form.validate_on_submit():
-        flash(f'Account has been logged in for {form.first_name.data} ', 'success')
-    return render_template('login.html',form=form)
-
-
+        user = User.query.filter_by(email = form.email.data).first()
+        if user and (user.password == form.password.data):
+            print(" SUCCESFULL")
+            flash(f'Account has been logged in for {form.first_name.data} ', 'success')
+            login_user(user, remember=form.remember.data)
+            return redirect(url_for('register_student.html'))
+        else:
+            flash(f'Login has been unsuccessful. Email/password is wrong {form.first_name.data} ', 'success')
+            print("NOT SUCCESFULL")
+    return render_template('login.html',title ='Login', form=form)
 
 @app.route("/register-student",methods=['GET','POST'])
 def registerStudent():
@@ -72,5 +79,3 @@ def profile():
 @app.route("/registeredcourses", methods=['GET','POST'])
 def registered():
     return render_template('registeredCourses.html')
-
-

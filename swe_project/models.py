@@ -1,6 +1,9 @@
-from swe_project import db,login_manager
+from swe_project import db, login_manager
 from datetime import datetime
 from flask_login import UserMixin
+
+
+
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -71,5 +74,3 @@ class Student_Course(db.Model):
     student_course_id=db.Column(db.Integer,primary_key=True)
     student_id=db.Column(db.Integer,db.ForeignKey('student.student_id'),nullable=False)
     course_id=db.Column(db.Integer,db.ForeignKey('courses.course_id'),nullable=False)
-
-
