@@ -80,6 +80,7 @@ def profile():
 @app.route('/logout')
 def logout():
     logout_user()
+    flash("Account has been logged out succesfully...", 'success')
     return redirect(url_for('login'))
 
 

@@ -1,69 +1,77 @@
+
 <!DOCTYPE html>
 <html>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Profile - Note Sharing</title>
+    <title>Profile - Student</title>
     <link rel="stylesheet" href="static/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="static/assets/fonts/fontawesome-all.min.css">
 </head>
-<body id="page-top">
+    <body id="page-top">
+            {% with messages= get_flashed_messages(with_categories=true) %}
+            {%if messages%}
+            {%for category,message in messages%}
+            <div class='alert alert-{{category}}'>
+                {{message}}
+            </div>
+            {%endfor%}
+            {%endif%}
+        {% endwith%}
     <div id="wrapper">
         <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
             <div class="container-fluid d-flex flex-column p-0">
                 <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
                     <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
-                    <div class="sidebar-brand-text mx-3"><span>Note Sharing</span></div>
+                    <div class="sidebar-brand-text mx-3"><span>noteSharing</span></div>
                 </a>
-                <hr class="sidebar-divider my-0">
+              
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="{{url_for('profile')}}"><i class="fas fa-user"></i><span>Profile</span></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="{{url_for('registeredcourses')}}"><i class="fas fa-table"></i><span>Registered Courses</span></a></li>
-                </ul> 
-            </div>
-           
-        </nav>
-        <!--My own code starts here.-->
-        <div class="container align-items-center col-sm-8 bg-gradient-white" id="content-wrapper">
-            <div class="row align-items-center">
-                {{current_user.id}}
-                    <ul class="list-group">
-                    {%for uni in University.query.all()%}
                     
-                     <li class="list-group-item">{{uni.name}}</li>
-                    {%endfor%}
-                    </ul>
+                    <li class="nav-item" role="presentation"><a class="nav-link active" href="profile.html"><i class="fas fa-user"></i><span>Profile</span></a></li>
+
+                </ul>
+                <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
-            </div>
-        <!--My own code ends here.-->      
+        </nav>
         <div class="d-flex flex-column" id="content-wrapper">
             <div id="content">
-                <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
-                        <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a>
-                    <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>                 
-                            </div>
-                        </form>
-                       <!--For adding next to the profile picture add here...-->
-                      <div class="nav-item dropdown no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><span class="d-none d-lg-inline mr-2 text-gray-600 small">Valerie Luna</span><img class="border rounded-circle img-profile" src="static/assets/img/avatars/avatar1.jpeg"></a>     
-                      </div>
-                    </nav>
-                    </div>
+                    <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+                            <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a> </nav>
+                <div class="container-fluid" style="margin-top: 40px;">
+                    <h3 class="text-dark mb-4" style="margin-bottom: 24px;height: 18px;">Welcome Zaid!</h3><button class="btn btn-primary" type="button" style="margin-bottom: 10px;">Upload Notes</button>
+                    <div class="card shadow mb-5"></div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th style="width: 358px;color: rgb(0,0,0);">Your registered courses:</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Software Engineering</td>
+                            </tr>
+                            <tr>
+                                <td>Operating Systems</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            </div>
-            
-        </div>
-        <footer class="bg-white sticky-footer">
-            <div class="container my-auto">
-                <div class="text-center my-auto copyright"><span>Copyright © noteSharing 2020 | SK ZR FT ST</span></div>
-            </div>
-        </footer>
-    </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>       
+            <footer class="bg-white sticky-footer">
+                <div class="container my-auto">
+                    <div class="text-center my-auto copyright"><span>Copyright © noteSharing 2020 | SK ZR FT ST</span></div>
+                </div>
+            </footer>
+        </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
     <script src="static/assets/js/jquery.min.js"></script>
     <script src="static/assets/bootstrap/js/bootstrap.min.js"></script>
-    <script src="static/assets/js/chart.min.js"></script>
-    <script src="static/assets/js/bs-init.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
     <script src="static/assets/js/theme.js"></script>
 </body>
+
 </html>
