@@ -64,7 +64,7 @@ def registerFaculty():
     return render_template('register_faculty.html',form=form)
 
 def addUserFaculty(form):
-    user=User(password=form.password.data,email=form.email.data,university_id=form.university_chosen.data,st_fa=False,uni_admin_check=False)
+    user=User(password=form.password.data,email=form.email.data,university_id=form.university_chosen.data,st_fa=True,uni_admin_check=False)
     db.session.add(user)
     db.session.commit()
     faculty=Faculty(user_id=user.id,firstname=form.first_name.data,lastname=form.last_name.data)
@@ -75,7 +75,13 @@ def addUserFaculty(form):
 @app.route("/profile", methods=['GET','POST'])
 @login_required
 def profile():
-    return render_template('profile.html',University=University)
+    Student_or_Faculty=current_user.st_fa
+    print(Student_or_Faculty)
+    if Student_or_Faculty==True:
+        name=Faculty.query.filter_by(user_id=current_user.id).first().firstname
+    if Student_or_Faculty==False:
+        name=Student.query.filter_by(user_id=current_user.id).first().firstname
+    return render_template('profile.html',University=University,User_FirstName=name)
 
 @app.route('/logout')
 def logout():
