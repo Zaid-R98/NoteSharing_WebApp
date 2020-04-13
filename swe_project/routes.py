@@ -1,5 +1,5 @@
 from flask import render_template, url_for, flash, redirect
-from swe_project import app
+from swe_project import app,db
 from swe_project.forms import UserRegistrationForm,LoginForm
 from swe_project.models import *
 from flask_login import login_user, current_user,login_required,logout_user
