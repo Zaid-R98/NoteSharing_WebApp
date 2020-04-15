@@ -70,6 +70,7 @@ def addUserFaculty(form):
     faculty=Faculty(user_id=user.id,firstname=form.first_name.data,lastname=form.last_name.data)
     db.session.add(faculty)
     db.session.commit()
+    print("hello")
 
 
 @app.route("/profile", methods=['GET','POST'])
