@@ -94,3 +94,7 @@ def logout():
 @app.route("/registeredcourses", methods=['GET','POST'])
 def registeredcourses():
     return render_template('registeredCourses.html')
+
+@app.route('/gitcheck')
+def gitcheck():
+    return("<h1>HELLO CHECK</h1>")
