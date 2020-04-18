@@ -1,6 +1,6 @@
 from flask import render_template, url_for, flash, redirect
 from swe_project import app,db
-from swe_project.forms import UserRegistrationForm,LoginForm
+from swe_project.forms import *
 from swe_project.models import *
 from flask_login import login_user, current_user,login_required,logout_user
 
@@ -94,3 +94,24 @@ def logout():
 @app.route("/registeredcourses", methods=['GET','POST'])
 def registeredcourses():
     return render_template('registeredCourses.html')
+
+
+##Feraas (Ability to view students, faculty, courses, and course student list) ##
+@app.route('/uni-admin', methods=['GET', 'POST'])
+def index():
+    search = SearchForm()
+    results = []
+    search_string = search.data['search']
+    return render_template('blank.html',form=search)
+
+
+##The route stands for register student to course.
+@app.route('/rstc', methods=['GET', 'POST'])
+def register_student_to_course():
+    form = RegistrationForm()
+
+    if  form.validate():
+        flash('User Sucessfully registered to Course!')
+        return redirect('/uni-admin')
+
+    return render_template('rstc.html', form=form)
