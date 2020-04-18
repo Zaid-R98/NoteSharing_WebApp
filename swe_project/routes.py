@@ -100,9 +100,10 @@ def registerStudent():
 
 
 
-@login_required
+
 ##Feraas (Ability to view students, faculty, courses, and course student list) ##
 @app.route('/uni-admin', methods=['GET', 'POST'])
+@login_required
 def index():
     form = SearchForm()
     form.choices.choices=[(0,'Student List'), (1,'Faculty List'), (2,'Courses List'), (3, 'Student- Course List'), (4,' Faculty Course List')]
@@ -112,11 +113,12 @@ def index():
     else:
         print(form.errors)
         print("Form Has Not Been Validated")
-    return render_template('blank.html',form=form,StudentList=Student.getStudent(1),FacultyList=Faculty.getFaculty(1),CourseList=Courses.getCourse(1),StudentCourseList=Student_Course.stucoget(1))
+    return render_template('blank.html',form=form,StudentList=Student.getStudent(current_user.university_id),FacultyList=Faculty.getFaculty(current_user.university_id),CourseList=Courses.getCourse(current_user.university_id),StudentCourseList=Student_Course.stucoget(current_user.university_id))
 
-@login_required
+
 ##The route stands for register student to course.
 @app.route('/rstc', methods=['GET', 'POST'])
+@login_required
 def register_student_to_course():
     form = RegistrationForm()
 
