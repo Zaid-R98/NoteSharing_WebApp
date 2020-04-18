@@ -23,6 +23,12 @@
                 <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
             </div>
         </nav>
+        </nav>
+        <div id="content">
+            <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+                <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a> 
+                <a class="nav-item nav-link" href="{{ url_for('index') }}">Admin View</a> </nav>
+        </div>
             <div class="container-fluid">
                 <h2 class="text-dark mb-1">Enter the details below to register a student to a course: </h2>
      

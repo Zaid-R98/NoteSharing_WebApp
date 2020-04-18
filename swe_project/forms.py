@@ -31,7 +31,6 @@ class UserRegistrationForm(FlaskForm):
     password=PasswordField('Password',validators=[DataRequired()])
     confirm_password=PasswordField('Confirm Passoword', validators=[DataRequired(),EqualTo('password')])
     university_chosen=SelectField(coerce=int)
-    #university_chosen=SelectField('university_chosen',choices=[('POP','POOP'),('PP','PEE')])
     submit = SubmitField('Sign Up')
 
 
@@ -41,7 +40,6 @@ class LoginForm(FlaskForm):
     email = StringField('Email',
                         validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
-    remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
 
 
@@ -49,15 +47,22 @@ class LoginForm(FlaskForm):
 
 
 class SearchForm(FlaskForm):
-    choices = [('Students', 'Students'),
-               ('Faculty', 'Faculty'),
-               ('Courses','Courses'),
-               ('Courses Student List','Courses Student List')
-               ]
-    select = SelectField('Select what you would like to display:', choices=choices)
-    search = StringField('')
+    choices=SelectField(coerce=int)
+    submit = SubmitField('Search For Tables')
 
 
 class RegistrationForm(FlaskForm):
     StudentID = StringField('Student ID: ')
     CourseID = StringField('Course ID: ')
+
+
+#Feraas Search Form
+#class SearchForm(Form):
+ #   choices = [('Students', 'Students'),
+  #             ('Faculty', 'Faculty'),
+   #            ('Courses','Courses'),
+    #           ('Courses Student List','Courses Student List')
+     #          ]
+    #select = SelectField('Select what you would like to display:', choices=choices)
+    #search = StringField('')
+

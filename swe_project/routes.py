@@ -11,8 +11,10 @@ def login():
         user = User.query.filter_by(email = form.email.data).first()
         if user and (user.password == form.password.data):
             flash(f'Account has been logged in for {form.email.data} ', 'success')
-            login_user(user, remember=form.remember.data)
-            return redirect(url_for('profile'))
+            login_user(user)
+            if user.uni_admin_check==True:#Uni admin login is seperate
+                return redirect(url_for('index'))
+            return redirect(url_for('profile')) #Normal User Login
         else:
             print(form.errors)
             flash(f'Login has been unsuccessful. Email/password is wrong {form.email.data} ', 'danger')
@@ -20,23 +22,6 @@ def login():
     else:
         print(form.errors)
     return render_template('login.html',title ='Login', form=form)
-
-
-@app.route("/register-student",methods=['GET','POST'])
-def registerStudent():
-    form=UserRegistrationForm()
-    if University.query.first()==None:
-        form.university_chosen.choices=[('0','No University in the System yet..')]
-    else:
-        form.university_chosen.choices=[(uni.id,uni.name) for uni in University.query.all()]
-    if form.validate_on_submit():
-        flash(f'Account has been created for {form.first_name.data}', 'success')
-        addUserStudent(form)
-    else:
-        print("Form has not been validated!") #data being inputted fine now.
-        print(form.errors)
-    return render_template('register_student.html',form=form)
-
 
 def addUserStudent(form):
     user=User(password=form.password.data,email=form.email.data,university_id=form.university_chosen.data,st_fa=False,uni_admin_check=False)
@@ -90,21 +75,46 @@ def logout():
     flash("Account has been logged out succesfully...", 'success')
     return redirect(url_for('login'))
 
-
+#check this route below too...
 @app.route("/registeredcourses", methods=['GET','POST'])
 def registeredcourses():
     return render_template('registeredCourses.html')
 
 
+
+@app.route("/register-student",methods=['GET','POST'])
+def registerStudent():
+    form=UserRegistrationForm()
+    if University.query.first()==None:
+        form.university_chosen.choices=[('0','No University in the System yet..')]
+    else:
+        form.university_chosen.choices=[(uni.id,uni.name) for uni in University.query.all()]
+    if form.validate_on_submit():
+        flash(f'Account has been created for {form.first_name.data}', 'success')
+        addUserStudent(form)
+    else:
+        print("Form has not been validated!") #data being inputted fine now.
+        print(form.errors)
+    return render_template('register_student.html',form=form)
+
+
+
+
+@login_required
 ##Feraas (Ability to view students, faculty, courses, and course student list) ##
 @app.route('/uni-admin', methods=['GET', 'POST'])
 def index():
-    search = SearchForm()
-    results = []
-    search_string = search.data['search']
-    return render_template('blank.html',form=search)
+    form = SearchForm()
+    form.choices.choices=[(0,'Student List'), (1,'Faculty List'), (2,'Courses List'), (3, 'Student- Course List'), (4,' Faculty Course List')]
+    if form.validate_on_submit():
+        print(form.choices.data)
+        print("Form has been Validated!")
+    else:
+        print(form.errors)
+        print("Form Has Not Been Validated")
+    return render_template('blank.html',form=form,StudentList=Student.getStudent(1),FacultyList=Faculty.getFaculty(1))
 
-
+@login_required
 ##The route stands for register student to course.
 @app.route('/rstc', methods=['GET', 'POST'])
 def register_student_to_course():

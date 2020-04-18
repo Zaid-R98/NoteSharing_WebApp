@@ -18,6 +18,12 @@ class User(db.Model,UserMixin):
     st_fa=db.Column(db.Boolean,nullable=False) #True if Faculty
     uni_admin_check=db.Column(db.Boolean,nullable=False)#True if Uniadmin
 
+    def GetUser(id):
+        return User.query.filter_by(id=id).first()
+    
+    def GetUserOfUni(uni_admin_uni_id):
+        return User.query.filter_by(university_id=uni_admin_uni_id)
+
 class Uni_admin(db.Model):
     id=db.Column(db.Integer,primary_key=True)#admin id
     user_id=db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)
@@ -29,14 +35,30 @@ class Student(db.Model):
     user_id=db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)
     firstname=db.Column(db.String(20),nullable=False)
     lastname=db.Column(db.String(20),nullable=False)
-    #academic_level=db.Column(db.String(30),nullable=False)
-    
+    #academic_level=db.Column(db.String(30),nullable=False)           
+
+    def getStudent(uni_id):#uni_id is admin id
+        studentlist=[]
+        for uzer in User.GetUserOfUni(uni_id):
+            if Student.query.filter_by(user_id=uzer.id).first():    
+                studentlist.append(Student.query.filter_by(user_id=uzer.id).first())
+        return studentlist
+
+
 
 class Faculty(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     user_id=db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)
     firstname=db.Column(db.String(20),nullable=False)
     lastname=db.Column(db.String(20),nullable=False)
+
+    def getFaculty(uni_id):#uni_id is admin id
+        FacultyList=[]
+        for uzer in User.GetUserOfUni(uni_id):
+            if Faculty.query.filter_by(user_id=uzer.id).first():    
+                FacultyList.append(Faculty.query.filter_by(user_id=uzer.id).first())
+        return FacultyList
+
 
 class University(db.Model):
     id=db.Column(db.Integer,primary_key=True)

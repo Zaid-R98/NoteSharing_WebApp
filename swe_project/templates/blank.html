@@ -29,11 +29,6 @@
                         <ul class="nav navbar-nav flex-nowrap ml-auto">
                             <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-search"></i></a>
                                 <div class="dropdown-menu dropdown-menu-right p-3 animated--grow-in" role="menu" aria-labelledby="searchDropdown">
-                                    <form class="form-inline mr-auto navbar-search w-100">
-                                        <div class="input-group"><input class="bg-light form-control border-0 small" type="text" placeholder="Search here">
-                                            <div class="input-group-append"><button class="btn btn-primary py-0" type="button"><i class="fas fa-search"></i></button></div>
-                                        </div>
-                                    </form>
                                 </div>
                             </li>
                             <div class="d-none d-sm-block topbar-divider"></div>
@@ -56,23 +51,93 @@
                   </ul>
                 {% endif %}
               {% endwith %}
+ <form method=post>
+        {{form.hidden_tag()}}
 
-
-              
-                {% from "_formhelpers.html" import render_field %}
-     <form method=post>
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+            <h5>
+             Choose List-
+                 </h5>
+                {{form.choices(class="form-control padding-bottom")}}
     <dl>
-     {{ render_field(form.select) }}
         <p>
      
     </dl>
-        <p><input type=submit value=Search>
-        </form>
-                </div>
-            </form> 
-            </div>
 
+    <div class="align-middle">
+            <!--Student Student Button Option-->
+            {{ form.submit(class="btn btn-outline-info") }}
+    </div>
+    </form>
+<!-------Enter the Table Logic here Below Now---  -->
+
+<!--Student Table-->
+        {%if form.choices.data==0%}
+        <table class= "table table-dark">
+            <tr>
+                <th scope="col">
+                    Student Name
+                </th>
+                <th scope= "col">
+                    Student User ID
+                </th>
+            </tr>
+        {%for user in StudentList%}
+            <tr>
+                <td scope="col">
+                    {{user.firstname+"  "+ user.lastname}}
+                </td>
+                <td scope="col">
+                    {{user.user_id}}
+                </td>
+            </tr>
+        {%endfor%}
+        </table>
+        {%endif%}
+
+<!--Faculty Table-->
+{%if form.choices.data==1%}
+        <table class= "table table-dark">
+            <tr>
+                <th scope="col">
+                    Faculty Name
+                </th>
+                <th scope= "col">
+                    Faculty User ID
+                </th>
+            </tr>
+        {%for user in FacultyList%}
+            <tr>
+                <td scope="col">
+                    {{user.firstname+ "   "+ user.lastname}}
+                </td>
+                <td scope="col">
+                    {{user.user_id}}
+                </td>
+            </tr>
+        {%endfor%}
+        </table>
+        {%endif%}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+       
         </div>
         <footer class="bg-white sticky-footer">
             <div class="container my-auto">
