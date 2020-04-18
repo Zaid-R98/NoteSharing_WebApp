@@ -80,6 +80,9 @@ class Courses(db.Model):
     uni_id=db.Column(db.Integer,db.ForeignKey('university.id'),nullable=False)
     name=db.Column(db.String(40),nullable=False,unique=True)
     faculty_id=db.Column(db.Integer,db.ForeignKey('faculty.id'),nullable=False)
+
+    def getCourse(uni_admin_id): #will also work for faculty-course table
+        return Courses.query.filter_by(uni_id=uni_admin_id)
     
 class Notes(db.Model):
     id=db.Column(db.Integer,primary_key=True)
@@ -96,3 +99,15 @@ class Student_Course(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     student_id=db.Column(db.Integer,db.ForeignKey('student.id'),nullable=False)
     course_id=db.Column(db.Integer,db.ForeignKey('courses.id'),nullable=False)
+
+    def stucoget(uni_admin_id):
+        student_course_list=[]
+        students=Student.getStudent(uni_admin_id)
+        for z in students:
+            for stcr in Student_Course.query.all():
+                if stcr.student_id==z.id:
+                    student_course_list.append(stcr)
+
+        return student_course_list
+
+            

@@ -87,7 +87,7 @@
                     {{user.firstname+"  "+ user.lastname}}
                 </td>
                 <td scope="col">
-                    {{user.user_id}}
+                    {{user.id}}
                 </td>
             </tr>
         {%endfor%}
@@ -111,20 +111,86 @@
                     {{user.firstname+ "   "+ user.lastname}}
                 </td>
                 <td scope="col">
-                    {{user.user_id}}
+                    {{user.id}}
                 </td>
             </tr>
         {%endfor%}
         </table>
         {%endif%}
 
+<!--Course Table-->
+{%if form.choices.data==2%}
+        <table class= "table table-dark">
+            <tr>
+                <th scope="col">
+                    Course Name
+                </th>
+                <th scope= "col">
+                    Course ID
+                </th>
+            </tr>
+        {%for user in CourseList%}
+            <tr>
+                <td scope="col">
+                    {{user.name}}
+                </td>
+                <td scope="col">
+                    {{user.id}}
+                </td>
+            </tr>
+        {%endfor%}
+        </table>
+        {%endif%}
 
+<!--Student Course List View-->
+{%if form.choices.data==3%}
+        <table class= "table table-dark">
+            <tr>
+                <th scope="col">
+                    Course ID
+                </th>
+                <th scope= "col">
+                    Student ID
+                </th>
+            </tr>
+        {%for user in StudentCourseList%}
+            <tr>
+                <td scope="col">
+                    {{user.course_id}}
+                </td>
+                <td scope="col">
+                    {{user.student_id}}
+                </td>
+            </tr>
+        {%endfor%}
+        </table>
+        {%endif%}
 
+        
 
-
-
-
-
+<!--Faculty Course List View-->
+{%if form.choices.data==4%}
+        <table class= "table table-dark">
+            <tr>
+                <th scope="col">
+                    Course ID
+                </th>
+                <th scope= "col">
+                    Faculty ID
+                </th>
+            </tr>
+        {%for user in CourseList%}
+            <tr>
+                <td scope="col">
+                    {{user.id}}
+                </td>
+                <td scope="col">
+                    {{user.faculty_id}}
+                </td>
+            </tr>
+        {%endfor%}
+        </table>
+        {%endif%}
 
 
 

@@ -112,7 +112,7 @@ def index():
     else:
         print(form.errors)
         print("Form Has Not Been Validated")
-    return render_template('blank.html',form=form,StudentList=Student.getStudent(1),FacultyList=Faculty.getFaculty(1))
+    return render_template('blank.html',form=form,StudentList=Student.getStudent(1),FacultyList=Faculty.getFaculty(1),CourseList=Courses.getCourse(1),StudentCourseList=Student_Course.stucoget(1))
 
 @login_required
 ##The route stands for register student to course.
