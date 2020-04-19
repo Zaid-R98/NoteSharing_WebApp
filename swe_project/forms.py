@@ -1,6 +1,6 @@
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField,ValidationError,SelectField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField,ValidationError,SelectField,IntegerField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 from swe_project import db
 from swe_project.models import *
@@ -51,18 +51,25 @@ class SearchForm(FlaskForm):
     submit = SubmitField('Search For Tables')
 
 
-class RegistrationForm(FlaskForm):
-    StudentID = StringField('Student ID: ')
-    CourseID = StringField('Course ID: ')
+class RegistrationForm(FlaskForm): #Register Student To Course to Student Course Table
+    StudentID = StringField('Student ID: ',validators=[DataRequired()])
+    CourseID = StringField('Course ID: ',validators=[DataRequired()])
+    submit=SubmitField('Register Student')
 
 
-#Feraas Search Form
-#class SearchForm(Form):
- #   choices = [('Students', 'Students'),
-  #             ('Faculty', 'Faculty'),
-   #            ('Courses','Courses'),
-    #           ('Courses Student List','Courses Student List')
-     #          ]
-    #select = SelectField('Select what you would like to display:', choices=choices)
-    #search = StringField('')
+class AddCollegeForm(FlaskForm):
+    name= StringField('Enter the Name of the New College..',validators=[DataRequired()])
+    submit=SubmitField('Add College')
+
+
+class AddDepartmentForm(FlaskForm):
+    name= StringField('Enter the Name of the New Department..',validators=[DataRequired()])
+    college_id=IntegerField('Enter the College ID',validators=[DataRequired()])
+    submit=SubmitField('Add Department')
+
+class AddCourseForm(FlaskForm):
+    name= StringField('Enter the Name of the Course..',validators=[DataRequired()])
+    faculty_id=IntegerField('Enter the Faculty ID',validators=[DataRequired()])
+    department_id=IntegerField('Enter the Department ID',validators=[DataRequired()])
+    submit=SubmitField('Add Department')
 

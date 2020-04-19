@@ -4,13 +4,22 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Add Student to Course</title>
+    <title>Add Course</title>
     <link rel="stylesheet" href="static/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="static/assets/fonts/fontawesome-all.min.css">
 </head>
 
 <body id="page-top">
+        {% with messages= get_flashed_messages(with_categories=true) %}
+        {%if messages%}
+        {%for category,message in messages%}
+        <div class='alert alert-{{category}}'>
+            {{message}}
+        </div>
+        {%endfor%}
+        {%endif%}
+    {% endwith%}
     <div id="wrapper">
         <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
             <div class="container-fluid d-flex flex-column p-0">
@@ -30,21 +39,40 @@
                 <a class="nav-item nav-link" href="{{ url_for('index') }}">Admin View</a> </nav>
         </div>
             <div class="container-fluid">
-                <h2 class="text-dark mb-1">Enter the details below to register a student to a course: </h2>
-                <form method=post action=" ">
+                <h2 class="text-dark mb-1">Add Course.. </h2>
+                {{form.hidden_tag()}}
+                <form method="POST" action=" ">
                         {{form.hidden_tag()}}
             
-                        <!--Add Student to Course-->
+                        <!--Add Course-->
+                        
+                        <div class="form-group row">
+                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                    <!--Course Name-->
+                                {{form.name.label}}
+                                {{form.name(class="form-control form-control-user")}}
+                         </div>
+                         <div class="col-sm-6 mb-3 mb-sm-0">
+                                <!--Faculty_id-->
+                            {{form.faculty_id.label}}
+                            {{form.faculty_id(class="form-control form-control-user")}}
+                         </div>
+                         <div class="col-sm-6 mb-3 mb-sm-0">
+                                <!--Department_id-->
+                            {{form.department_id.label}}
+                            {{form.department_id(class="form-control form-control-user")}}
+                         </div>
+            </div>
 
 
+            <div class="form-group align-middle">
+                    {{form.hidden_tag()}}
+                    <div class="align-middle">
+                            <!--Student Student Button Option-->
+                            {{ form.submit(class="btn btn-outline-info") }}
+                    </div>
 
-
-
-
-
-
-
-
+                </form>
 
 
                  </form>

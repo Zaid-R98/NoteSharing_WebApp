@@ -106,14 +106,14 @@ def registerStudent():
 @login_required
 def index():
     form = SearchForm()
-    form.choices.choices=[(0,'Student List'), (1,'Faculty List'), (2,'Courses List'), (3, 'Student- Course List'), (4,' Faculty Course List')]
+    form.choices.choices=[(0,'Student List'), (1,'Faculty List'), (2,'Courses List'), (3, 'Student- Course List'), (4,' Faculty Course List'),(5,'Department List'), (6,'College List')]
     if form.validate_on_submit():
         print(form.choices.data)
         print("Form has been Validated!")
     else:
         print(form.errors)
         print("Form Has Not Been Validated")
-    return render_template('blank.html',form=form,StudentList=Student.getStudent(current_user.university_id),FacultyList=Faculty.getFaculty(current_user.university_id),CourseList=Courses.getCourse(current_user.university_id),StudentCourseList=Student_Course.stucoget(current_user.university_id))
+    return render_template('blank.html',form=form,StudentList=Student.getStudent(current_user.university_id),FacultyList=Faculty.getFaculty(current_user.university_id),CourseList=Courses.getCourse(current_user.university_id),StudentCourseList=Student_Course.stucoget(current_user.university_id),CollegeList=College.getCollege(current_user.university_id),DepartmentList=Department.getDepartment(current_user.university_id))
 
 
 ##The route stands for register student to course.
@@ -127,3 +127,66 @@ def register_student_to_course():
         return redirect('/uni-admin')
 
     return render_template('rstc.html', form=form)
+
+
+#Adding the College by Uni Admin
+@app.route('/add_college',methods=['GET','POST'])
+@login_required
+def addCollegeAdmin():
+    form=AddCollegeForm()
+    if form.validate_on_submit():
+        flash('College has been added succesfully ', category='success')
+        AddCollege(current_user.university_id,form.name.data)
+    
+    else:
+        print(form.errors)
+        #flash('College has not been added. Please check the data entered!', category='danger')
+
+    return render_template('addCollege.html',form=form)
+
+
+def AddCollege(pid,pname):
+    c1=College(uni_id=pid,name=pname)
+    db.session.add(c1)
+    db.session.commit()
+
+
+
+#Adding the Department by Uni Admin
+@app.route('/add_department',methods=['GET','POST'])
+@login_required
+def addDepartmentAdmin():
+    form=AddDepartmentForm()
+    if form.validate_on_submit():
+        flash('Department has been added succesfully ', category='success')
+        addDepartment(current_user.university_id,form.name.data,form.college_id.data)
+    
+    else:
+        print(form.errors)
+        #flash('Department has not been added. Please check the data entered!', category='danger')
+
+    return render_template('addDepartment.html',form=form)
+
+
+def addDepartment(pid,pname,pcollege_id):
+    c1=Department(uni_id=pid,name=pname,college_id=pcollege_id)
+    db.session.add(c1)
+    db.session.commit()  
+
+
+@app.route('/add-course', methods=['GET','POST'])
+@login_required
+def addCourseAdmin():
+    form=AddCourseForm()
+    if form.validate_on_submit():
+        flash('Course has been added succesfully ', category='success')
+        addCourse(current_user.university_id,form.name.data,form.faculty_id.data,form.department_id.data)
+    else:
+        print(form.errors)
+    return render_template('addCourse.html',form=form)
+
+
+def addCourse(pid,pname,pfacultyid,pdepartmentid):
+    c1=Courses(uni_id=pid,name=pname,faculty_id=pfacultyid,department_id=pdepartmentid)
+    db.session.add(c1)
+    db.session.commit()

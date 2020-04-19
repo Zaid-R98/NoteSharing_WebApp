@@ -37,7 +37,7 @@ class Student(db.Model):
     lastname=db.Column(db.String(20),nullable=False)
     #academic_level=db.Column(db.String(30),nullable=False)           
 
-    def getStudent(uni_id):#uni_id is admin id
+    def getStudent(uni_id):#uni_id is admin uni id
         studentlist=[]
         for uzer in User.GetUserOfUni(uni_id):
             if Student.query.filter_by(user_id=uzer.id).first():    
@@ -70,16 +70,24 @@ class College(db.Model):
     uni_id=db.Column(db.Integer,db.ForeignKey('university.id'),nullable=False)
     name=db.Column(db.String(40),nullable=False,unique=True)
 
+    def getCollege(uni_admin_id):
+        return College.query.filter_by(uni_id=uni_admin_id)
+
 class Department(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     uni_id=db.Column(db.Integer,db.ForeignKey('university.id'),nullable=False)
     name=db.Column(db.String(40),nullable=False,unique=True)
+    college_id=db.Column(db.Integer,db.ForeignKey('college.id'),nullable=False)
+
+    def getDepartment(uni_admin_id):
+        return Department.query.filter_by(uni_id=uni_admin_id)
 
 class Courses(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     uni_id=db.Column(db.Integer,db.ForeignKey('university.id'),nullable=False)
     name=db.Column(db.String(40),nullable=False,unique=True)
     faculty_id=db.Column(db.Integer,db.ForeignKey('faculty.id'),nullable=False)
+    department_id=db.Column(db.Integer,db.ForeignKey('department.id'),nullable=False)
 
     def getCourse(uni_admin_id): #will also work for faculty-course table
         return Courses.query.filter_by(uni_id=uni_admin_id)

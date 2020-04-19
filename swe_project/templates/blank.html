@@ -47,10 +47,41 @@
                             
             </div>
             </nav>
-            <div class="container-fluid">
-                <a href="{{ url_for('register_student_to_course') }}"> Register a student/faculty for a course </a>
+            <!--Other Options For the Uni Admin-->
+
+            <nav class="navbar navbar-expand-lg class="navbar navbar-light" style="background-color:lightblue;">
+                    <a class="navbar-brand" href="#">Choose Options</a> 
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                  
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                      <ul class="navbar-nav mr-auto">
+                        <li class="nav-item ">
+                          <a class="nav-link" href="#">Add Students To Course <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                                <a class="nav-link" href="{{url_for('addCourseAdmin')}}">Add Course</a>
+                        </li>
+                        <li class="nav-item">
+                                <a class="nav-link" href="{{url_for('addCollegeAdmin')}}"> Add College</a>
+                        </li>
+                        <li class="nav-item">
+                                <a class="nav-link" href="{{url_for('addDepartmentAdmin')}}">Add Department</a>
+                        </li>
+                    </ul>
+             </nav>
+
+
+
+
+
+
+
+
+    <!--Form to display the different Tables to the User.-->
                 <h3 class="text-dark mb-1">Display Students/Faculty/Courses: </h3>
- <form method=post>
+                <form method=post>
         {{form.hidden_tag()}}
 
             <h5>
@@ -127,6 +158,9 @@
                 <th scope= "col">
                     Course ID
                 </th>
+                <th scope= "col">
+                        Department ID
+                    </th>
             </tr>
         {%for user in CourseList%}
             <tr>
@@ -136,6 +170,9 @@
                 <td scope="col">
                     {{user.id}}
                 </td>
+                <td scope="col">
+                        {{user.department_id}}
+                    </td>
             </tr>
         {%endfor%}
         </table>
@@ -191,9 +228,57 @@
         </table>
         {%endif%}
 
+<!--Department List-->
+{%if form.choices.data==5%}
+        <table class= "table table-dark">
+            <tr>
+                <th scope="col">
+                    Department ID
+                </th>
+                <th scope= "col">
+                    Department Name
+                </th>
+            </tr>
+        {%for user in DepartmentList%}
+            <tr>
+                <td scope="col">
+                    {{user.id}}
+                </td>
+                <td scope="col">
+                    {{user.name}}
+                </td>
+            </tr>
+        {%endfor%}
+        </table>
+        {%endif%}
 
 
 
+
+<!--College List-->
+
+{%if form.choices.data==6%}
+        <table class= "table table-dark">
+            <tr>
+                <th scope="col">
+                    College ID
+                </th>
+                <th scope= "col">
+                   College Name
+                </th>
+            </tr>
+        {%for user in CollegeList%}
+            <tr>
+                <td scope="col">
+                    {{user.id}}
+                </td>
+                <td scope="col">
+                    {{user.name}}
+                </td>
+            </tr>
+        {%endfor%}
+        </table>
+        {%endif%}
 
 
 
