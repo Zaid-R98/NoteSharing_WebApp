@@ -119,14 +119,23 @@ def index():
 ##The route stands for register student to course.
 @app.route('/rstc', methods=['GET', 'POST'])
 @login_required
-def register_student_to_course():
-    form = RegistrationForm()
+def addStudentCourseAdmin():
+    form = addStudentCourseForm()
 
     if  form.validate():
-        flash('User Sucessfully registered to Course!')
-        return redirect('/uni-admin')
+        flash('Student Sucessfully registered to Course!',category='success')
+        addStudentCourse(form.student_id.data,form.course_id.data)
+    else:
+        print(form.errors)
 
-    return render_template('rstc.html', form=form)
+    return render_template('addStudentCourse.html', form=form)
+
+
+
+def addStudentCourse(psid,pcid):
+    sc_cr=Student_Course(student_id=psid , course_id=pcid)
+    db.session.add(sc_cr)
+    db.session.commit()
 
 
 #Adding the College by Uni Admin
@@ -190,3 +199,5 @@ def addCourse(pid,pname,pfacultyid,pdepartmentid):
     c1=Courses(uni_id=pid,name=pname,faculty_id=pfacultyid,department_id=pdepartmentid)
     db.session.add(c1)
     db.session.commit()
+
+

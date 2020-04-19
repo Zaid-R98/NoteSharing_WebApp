@@ -51,9 +51,9 @@ class SearchForm(FlaskForm):
     submit = SubmitField('Search For Tables')
 
 
-class RegistrationForm(FlaskForm): #Register Student To Course to Student Course Table
-    StudentID = StringField('Student ID: ',validators=[DataRequired()])
-    CourseID = StringField('Course ID: ',validators=[DataRequired()])
+class addStudentCourseForm(FlaskForm): #Register Student To Course to Student Course Table
+    student_id = IntegerField('Student ID')
+    course_id = IntegerField('Course ID')
     submit=SubmitField('Register Student')
 
 
