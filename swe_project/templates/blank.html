@@ -11,6 +11,15 @@
 </head>
 
 <body id="page-top">
+        {% with messages= get_flashed_messages(with_categories=true) %}
+        {%if messages%}
+        {%for category,message in messages%}
+        <div class='alert alert-{{category}}'>
+            {{message}}
+        </div>
+        {%endfor%}
+        {%endif%}
+    {% endwith%}
     <div id="wrapper">
         <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
             <div class="container-fluid d-flex flex-column p-0">
@@ -41,16 +50,6 @@
             <div class="container-fluid">
                 <a href="{{ url_for('register_student_to_course') }}"> Register a student/faculty for a course </a>
                 <h3 class="text-dark mb-1">Display Students/Faculty/Courses: </h3>
-
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                  <ul class=flashes>
-                  {% for message in messages %}
-                    <li>{{ message }}</li>
-                  {% endfor %}
-                  </ul>
-                {% endif %}
-              {% endwith %}
  <form method=post>
         {{form.hidden_tag()}}
 
@@ -166,7 +165,7 @@
         </table>
         {%endif%}
 
-        
+
 
 <!--Faculty Course List View-->
 {%if form.choices.data==4%}
