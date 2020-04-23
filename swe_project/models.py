@@ -19,10 +19,10 @@ class User(db.Model,UserMixin):
     uni_admin_check=db.Column(db.Boolean,nullable=False)#True if Uniadmin
 
     def GetUser(id):
-        return User.query.filter_by(id=id).first()
+        return User.query.filter_by(id=id).all()
     
     def GetUserOfUni(uni_admin_uni_id):
-        return User.query.filter_by(university_id=uni_admin_uni_id)
+        return User.query.filter_by(university_id=uni_admin_uni_id).all()
 
 class Uni_admin(db.Model):
     id=db.Column(db.Integer,primary_key=True)#admin id
@@ -45,7 +45,7 @@ class Student(db.Model):
         return studentlist
     
     def getStudentUserID(userid):
-        return Student.query.filter_by(user_id=userid)
+        return Student.query.filter_by(user_id=userid).first()
 
 
 
@@ -74,7 +74,7 @@ class College(db.Model):
     name=db.Column(db.String(40),nullable=False,unique=True)
 
     def getCollege(uni_admin_id):
-        return College.query.filter_by(uni_id=uni_admin_id)
+        return College.query.filter_by(uni_id=uni_admin_id).all()
 
 class Department(db.Model):
     id=db.Column(db.Integer,primary_key=True)
@@ -83,7 +83,7 @@ class Department(db.Model):
     college_id=db.Column(db.Integer,db.ForeignKey('college.id'),nullable=False)
 
     def getDepartment(uni_admin_id):
-        return Department.query.filter_by(uni_id=uni_admin_id)
+        return Department.query.filter_by(uni_id=uni_admin_id).all()
 
 class Courses(db.Model):
     id=db.Column(db.Integer,primary_key=True)
@@ -93,7 +93,7 @@ class Courses(db.Model):
     department_id=db.Column(db.Integer,db.ForeignKey('department.id'),nullable=False)
 
     def getCourse(uni_admin_id): #will also work for faculty-course table
-        return Courses.query.filter_by(uni_id=uni_admin_id)
+        return Courses.query.filter_by(uni_id=uni_admin_id).all()
     
 class Notes(db.Model):
     id=db.Column(db.Integer,primary_key=True)
@@ -127,9 +127,11 @@ class Student_Course(db.Model):
         return student_course_list
 
     def studentcourselist(user_id): #Get all the courses for which a student is registered for...
-        student=Student.query.get(user_id)# Get The Student
+        student=Student.query.filter_by(user_id=user_id).first()# Get The Student
         studentcourseList=[]#Add Courses he is registered for to this list
-        StudentCourses=Student_Course.query.filter_by(student_id=student.id).all() #check if this works.
+        print("THE TEST ID OF THE STUDENT IS ")
+        print(student.id)
+        StudentCourses=Student_Course.query.filter_by(student_id=student.id).all()#check if this works.
 
         print("TEST-2 VIEW ALL COURSE")
         for sc in StudentCourses:
@@ -152,6 +154,10 @@ class Student_Course(db.Model):
         for fs in FilterStudent:
             courseidlist.append(fs.course_id)
         
+        print("The courses for which this student has registered are- RANS function")
+        for course in courseidlist:
+            print(course)
+
         for note in Notes.query.all():
             if note.approve==True and note.course_id in courseidlist:
                 approveNotes.append(note)

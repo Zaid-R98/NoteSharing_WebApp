@@ -207,6 +207,7 @@ def profile():
         name=Faculty.query.filter_by(user_id=current_user.id).first().firstname
     if Student_or_Faculty==False:
         name=Student.query.filter_by(user_id=current_user.id).first().firstname
+    print("The current user id is "+str(current_user.id))
     return render_template('profile.html',University=University,User_FirstName=name,CourseList=Student_Course.studentcourselist(current_user.id))
 
 @app.route('/upload', methods = ['GET','POST'])
@@ -215,15 +216,18 @@ def upload():
     form=UploadNotesForm()
     if request.method == 'POST':
         file = request.files['inputFile'] 
-        newFile = Notes(course_id = form.course_id, student_id =Student.getStudentUserID(current_user.id).id, Note = file.read())
+        student=Student.getStudentUserID(current_user.id)
+        print(student)
+        newFile = Notes(course_id = form.course_id.data, student_id =student.id, Note = file.read(),approve=True)
         db.session.add(newFile)
         db.session.commit()
-        return 'Saved ' + file.filename + ' to the database.'
+        flash('The Note has been added to the database. Professor will approve..', category='success')
     return render_template('upload.html',form=form)
 
 @app.route('/view-notes-student',methods=['GET','POST'])
 @login_required
 def ViewNote():
+    print("Testing Notes Now-->")
     return render_template('viewnotes.html',NoteList=Student_Course.ReturnApproveNotesStudent(current_user.id))
 
 @app.route('/download-notes',methods=['GET','POST'])
