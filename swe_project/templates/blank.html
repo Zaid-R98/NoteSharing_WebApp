@@ -108,13 +108,19 @@
                     Student Name
                 </th>
                 <th scope= "col">
-                    Student User ID
+                     User ID
                 </th>
+                <th scope= "col">
+                    Student ID
+               </th>
             </tr>
         {%for user in StudentList%}
             <tr>
                 <td scope="col">
                     {{user.firstname+"  "+ user.lastname}}
+                </td>
+                <td scope="col">
+                    {{user.user_id}}
                 </td>
                 <td scope="col">
                     {{user.id}}
@@ -132,8 +138,11 @@
                     Faculty Name
                 </th>
                 <th scope= "col">
-                    Faculty User ID
+                     User ID
                 </th>
+                <th scope= "col">
+                    Faculty ID
+               </th>
             </tr>
         {%for user in FacultyList%}
             <tr>
@@ -141,8 +150,12 @@
                     {{user.firstname+ "   "+ user.lastname}}
                 </td>
                 <td scope="col">
+                    {{user.user_id}}
+                </td>
+                <td scope="col">
                     {{user.id}}
                 </td>
+
             </tr>
         {%endfor%}
         </table>

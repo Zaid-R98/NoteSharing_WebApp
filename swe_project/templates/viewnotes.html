@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Student Profile</title>
+    <title>View Notes</title>
     <link rel="stylesheet" href="static/assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="static/assets/fonts/fontawesome-all.min.css">
@@ -50,61 +50,59 @@
             <!--Other Options For the Uni Admin-->
 
             <nav class="navbar navbar-expand-lg class="navbar navbar-light" style="background-color:lightblue;">
-                    <a class="navbar-brand" href="#">Choose Options --></a> 
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                       <span class="navbar-toggler-icon"></span>
                     </button>
                   
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                      <ul class="navbar-nav mr-auto">
-                        <li class="nav-item ">
-                          <a class="nav-link" href="{{url_for('ViewNote')}}">View Notes <span class="sr-only">(current)</span></a>
-                        </li>
-                        <li class="nav-item">
-                                <a class="nav-link" href="{{url_for('addCourseAdmin')}}">Rate Notes</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{url_for('upload')}}">Upload New Note!</a>
-                    </li>
-
-                    </ul>
-             </nav>
     </dl>
     </form>
     <h1>
-        Welcome, {{User_FirstName}}
+            Your Notes :
+        </h1>
         
-    </h1>
-    <h3>
-        Your User ID is {{current_user.id}}
-    </h3>
-    <h2>
-        Courses you are registered for->
-    </h2>
-    <!-- Displaying the Table with the list of courses the student is registered in :-->
-    <table class= "table table-dark" style="margin-top: 30px; margin-left: 10px;">
-        <tr>
-            <th scope="col">
-                Course Name
-            </th>
-            <th scope= "col">
-                Course ID
-            </th>
-        </tr>
-    {%for user in CourseList%}
-        <tr>
-            <td scope="col">
-                {{user.name}}
-            </td>
-            <td scope="col">
-                {{user.id}}
-            </td>
-        </tr>
-    {%endfor%}
-    </table>
-
-       
+        <table class= "table table-dark" style="margin-top: 30px; margin-left: 10px;">
+            <tr>
+                <th scope="col">
+                    Note ID
+                </th>
+                <th scope= "col">
+                    Course ID
+                </th>
+                <th scope= "col">
+                    Uploader Student ID
+                </th>
+                <th scope= "col">
+                    Rating
+                </th>
+                <th scope= "col">
+                   Download Link
+                </th>
+        
+            </tr>
+        {%for note in NoteList%}
+            <tr>
+                <td scope="col">
+                    {{note.id}}
+                </td>
+                <td scope="col">
+                    {{note.course_id}}
+                </td>
+                <td scope="col">
+                    {{note.student_id}}
+                </td>
+                <td scope="col">
+                    {{rating(note.id)}}
+                </td>
+                <td scope="col">
+                    <a href={{download(note.id)}}>Download Note</a>
+                </td>
+        
+            </tr>
+        {%endfor%}
+        </table>
         </div>
+       
+            
         <footer class="bg-white sticky-footer">
             <div class="container my-auto">
                 <div class="text-center my-auto copyright"><span>Copyright © noteSharing 2020 | SK ZR FT ST</span></div>

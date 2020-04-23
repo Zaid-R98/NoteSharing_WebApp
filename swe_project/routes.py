@@ -1,8 +1,17 @@
-from flask import render_template, url_for, flash, redirect
+from flask import render_template, url_for, flash, redirect,request,send_file
 from swe_project import app,db
 from swe_project.forms import *
 from swe_project.models import *
 from flask_login import login_user, current_user,login_required,logout_user
+from flask_wtf.file import FileField, FileRequired
+from werkzeug.utils import secure_filename
+from flask_wtf.csrf import CSRFProtect
+from io import BytesIO
+
+
+csrf = CSRFProtect(app)
+
+ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 @app.route("/", methods=['GET', 'POST'])
 def login():
@@ -56,18 +65,6 @@ def addUserFaculty(form):
     db.session.add(faculty)
     db.session.commit()
     print("hello")
-
-
-@app.route("/profile", methods=['GET','POST'])
-@login_required
-def profile():
-    Student_or_Faculty=current_user.st_fa
-    print(Student_or_Faculty)
-    if Student_or_Faculty==True:
-        name=Faculty.query.filter_by(user_id=current_user.id).first().firstname
-    if Student_or_Faculty==False:
-        name=Student.query.filter_by(user_id=current_user.id).first().firstname
-    return render_template('profile.html',University=University,User_FirstName=name)
 
 @app.route('/logout')
 def logout():
@@ -200,4 +197,38 @@ def addCourse(pid,pname,pfacultyid,pdepartmentid):
     db.session.add(c1)
     db.session.commit()
 
+
+@app.route("/profile", methods=['GET','POST'])
+@login_required
+def profile():
+    Student_or_Faculty=current_user.st_fa
+    print(Student_or_Faculty)
+    if Student_or_Faculty==True:
+        name=Faculty.query.filter_by(user_id=current_user.id).first().firstname
+    if Student_or_Faculty==False:
+        name=Student.query.filter_by(user_id=current_user.id).first().firstname
+    return render_template('profile.html',University=University,User_FirstName=name,CourseList=Student_Course.studentcourselist(current_user.id))
+
+@app.route('/upload', methods = ['GET','POST'])
+@login_required
+def upload():
+    form=UploadNotesForm()
+    if request.method == 'POST':
+        file = request.files['inputFile'] 
+        newFile = Notes(course_id = form.course_id, student_id =Student.getStudentUserID(current_user.id).id, Note = file.read())
+        db.session.add(newFile)
+        db.session.commit()
+        return 'Saved ' + file.filename + ' to the database.'
+    return render_template('upload.html',form=form)
+
+@app.route('/view-notes-student',methods=['GET','POST'])
+@login_required
+def ViewNote():
+    return render_template('viewnotes.html',NoteList=Student_Course.ReturnApproveNotesStudent(current_user.id))
+
+@app.route('/download-notes',methods=['GET','POST'])
+@login_required
+def DownloadNote(x):
+    fileData=Notes.query.filter_by(id=x).first()
+    return send_file(BytesIO(fileData),attachmentfile='NoteDownload.pdf',as_attachment=True) 
 

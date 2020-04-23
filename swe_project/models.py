@@ -43,6 +43,9 @@ class Student(db.Model):
             if Student.query.filter_by(user_id=uzer.id).first():    
                 studentlist.append(Student.query.filter_by(user_id=uzer.id).first())
         return studentlist
+    
+    def getStudentUserID(userid):
+        return Student.query.filter_by(user_id=userid)
 
 
 
@@ -97,11 +100,16 @@ class Notes(db.Model):
     course_id=db.Column(db.Integer,db.ForeignKey('courses.id'),nullable=False)
     student_id=db.Column(db.Integer,db.ForeignKey('student.id'),nullable=False)
     Note=db.Column(db.LargeBinary,nullable=False)
+    approve=db.Column(db.Boolean,nullable=False)
+
 
 class Rating(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     note_id=db.Column(db.Integer,db.ForeignKey('notes.id'),nullable=False)
     rating=db.Column(db.Integer,nullable=False)
+
+    def getRatingNote(noteid):
+        return int(Rating.query.filter_by(note_id=noteid).first())
 
 class Student_Course(db.Model):
     id=db.Column(db.Integer,primary_key=True)
@@ -118,4 +126,36 @@ class Student_Course(db.Model):
 
         return student_course_list
 
-            
+    def studentcourselist(user_id): #Get all the courses for which a student is registered for...
+        student=Student.query.get(user_id)# Get The Student
+        studentcourseList=[]#Add Courses he is registered for to this list
+        StudentCourses=Student_Course.query.filter_by(student_id=student.id).all() #check if this works.
+
+        print("TEST-2 VIEW ALL COURSE")
+        for sc in StudentCourses:
+            print("Student id is "+str(sc.student_id))
+            print("Course id is "+str(sc.course_id))
+
+        for courses in Courses.query.all():
+            for studentcourse in StudentCourses:
+                if studentcourse.course_id==courses.id:
+                    studentcourseList.append(courses)
+        
+        return studentcourseList
+
+
+    def ReturnApproveNotesStudent(user_id): #Returns Notes which have been approved by the professor for the courses the student is in
+        student=Student.query.get(user_id)
+        courseidlist=[]
+        FilterStudent=Student_Course.query.filter_by(student_id=student.id).all()
+        approveNotes=[]
+        for fs in FilterStudent:
+            courseidlist.append(fs.course_id)
+        
+        for note in Notes.query.all():
+            if note.approve==True and note.course_id in courseidlist:
+                approveNotes.append(note)
+        
+        return approveNotes
+
+
