@@ -58,9 +58,8 @@
     </form>
     <h1>
             Your Notes :
-        </h1>
-        
-        <table class= "table table-dark" style="margin-top: 30px; margin-left: 10px;">
+    </h1>
+    <table class= "table table-dark" style="margin-top: 30px; margin-left: 10px;">
             <tr>
                 <th scope="col">
                     Note ID
@@ -94,14 +93,17 @@
                     sample-rating
                 </td>
                 <td scope="col">
-                  Sample Download
+                <h4>
+                   <a href="{{url_for('DownloadNote',noteid=note.id)}}">Download Note</a>
+                </h4>
                 </td>
         
             </tr>
         {%endfor%}
         </table>
         </div>
-       
+        </div>
+        
             
         <footer class="bg-white sticky-footer">
             <div class="container my-auto">

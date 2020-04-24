@@ -229,11 +229,12 @@ def upload():
 @login_required
 def ViewNote():
     print("Testing Notes Now-->")
-    return render_template('viewnotes.html',NoteList=Student_Course.ReturnApproveNotesStudent(current_user.id),download="Change")
+    return render_template('viewnotes.html',NoteList=Student_Course.ReturnApproveNotesStudent(current_user.id),download=DownloadNote(1))
 
-@app.route('/download-notes',methods=['GET','POST'])
+@app.route('/download-notes/<int:noteid>',methods=['GET','POST'])
 @login_required
-def DownloadNote(x):
-    fileData=Notes.query.filter_by(id=x).first()
-    return send_file(BytesIO(fileData),attachmentfile='NoteDownload.pdf',as_attachment=True) 
+def DownloadNote(noteid):
+    print("CHECK ONE MORE TEST")
+    fileData=Notes.query.filter_by(id=noteid).first()
+    return send_file(BytesIO(fileData.Note),attachment_filename='NoteDownload.pdf',as_attachment=True) 
 
