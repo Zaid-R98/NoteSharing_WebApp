@@ -74,4 +74,4 @@ class AddCourseForm(FlaskForm):
     submit=SubmitField('Add Department')
 
 class UploadNotesForm(FlaskForm):
-    course_id=IntegerField('Enter the course ID' ,validators=[DataRequired()])
+    course_id=IntegerField('Enter the course ID')

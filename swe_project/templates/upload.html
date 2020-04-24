@@ -50,13 +50,11 @@
 
                     <h1>Upload a PDF to be approved by your instructor: </h1>
 
-                    <div class = "container">
-                            {{form.course_id.label}}
-                            {{form.course_id}}
-
-                            <form method=post enctype=multipart/form-data>
+                            <form method="POST" action="" enctype=multipart/form-data>
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-                              
+                            <div class = "container">
+                                    {{form.course_id.label}}
+                                    {{form.course_id}}
                                 <input type='file' name='inputFile'>
                                 <input type=submit value=Upload>
                               </form>

@@ -44,7 +44,7 @@ class Student(db.Model):
                 studentlist.append(Student.query.filter_by(user_id=uzer.id).first())
         return studentlist
     
-    def getStudentUserID(userid):
+    def getStudentFromUserID(userid):
         return Student.query.filter_by(user_id=userid).first()
 
 
@@ -146,8 +146,8 @@ class Student_Course(db.Model):
         return studentcourseList
 
 
-    def ReturnApproveNotesStudent(user_id): #Returns Notes which have been approved by the professor for the courses the student is in
-        student=Student.query.get(user_id)
+    def ReturnApproveNotesStudent(userid): #Returns Notes which have been approved by the professor for the courses the student is in
+        student=Student.query.filter_by(user_id=userid).first()
         courseidlist=[]
         FilterStudent=Student_Course.query.filter_by(student_id=student.id).all()
         approveNotes=[]

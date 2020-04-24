@@ -214,10 +214,11 @@ def profile():
 @login_required
 def upload():
     form=UploadNotesForm()
-    if request.method == 'POST':
+    if True:
         file = request.files['inputFile'] 
-        student=Student.getStudentUserID(current_user.id)
-        print(student)
+        student=Student.getStudentFromUserID(current_user.id)
+        print("STUDENT ID IS "+ str(student.id))
+        print("The data from the form is "+ str(form.course_id.data))
         newFile = Notes(course_id = form.course_id.data, student_id =student.id, Note = file.read(),approve=True)
         db.session.add(newFile)
         db.session.commit()
@@ -228,7 +229,7 @@ def upload():
 @login_required
 def ViewNote():
     print("Testing Notes Now-->")
-    return render_template('viewnotes.html',NoteList=Student_Course.ReturnApproveNotesStudent(current_user.id))
+    return render_template('viewnotes.html',NoteList=Student_Course.ReturnApproveNotesStudent(current_user.id),download="Change")
 
 @app.route('/download-notes',methods=['GET','POST'])
 @login_required
