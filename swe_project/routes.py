@@ -214,7 +214,7 @@ def profile():
 @login_required
 def upload():
     form=UploadNotesForm()
-    if True:
+    if request.method == 'POST':
         file = request.files['inputFile'] 
         student=Student.getStudentFromUserID(current_user.id)
         print("STUDENT ID IS "+ str(student.id))
