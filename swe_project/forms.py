@@ -28,7 +28,7 @@ class UserRegistrationForm(FlaskForm):
     first_name= StringField('First Name',validators=[DataRequired(),Length(max=20),Namecheck])
     last_name= StringField('Last Name',validators=[DataRequired(),Length(max=20),Namecheck])
     email=StringField('Email ', validators=[Email(),DataRequired(),Length(max=40),Emailcheck])
-    password=PasswordField('Password',validators=[DataRequired()])
+    password=PasswordField('Password',validators=[DataRequired(),Length(min=3,max=40)])
     confirm_password=PasswordField('Confirm Passoword', validators=[DataRequired(),EqualTo('password')])
     university_chosen=SelectField(coerce=int)
     submit = SubmitField('Sign Up')
@@ -71,7 +71,13 @@ class AddCourseForm(FlaskForm):
     name= StringField('Enter the Name of the Course..',validators=[DataRequired()])
     faculty_id=IntegerField('Enter the Faculty ID',validators=[DataRequired()])
     department_id=IntegerField('Enter the Department ID',validators=[DataRequired()])
-    submit=SubmitField('Add Department')
+    submit=SubmitField('Add Course')
 
 class UploadNotesForm(FlaskForm):
     course_id=IntegerField('Enter the course ID')
+    submit=SubmitField('Add Note') #check this one...
+
+class RateNoteForm(FlaskForm):
+    NoteID=IntegerField('Enter the ID of the Note', validators=[DataRequired()])
+    Rating=IntegerField('Enter your rating from 1 - 5', validators=[DataRequired()])
+    submit=SubmitField('Rate Note')

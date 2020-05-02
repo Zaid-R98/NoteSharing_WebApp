@@ -90,10 +90,10 @@
                     {{note.student_id}}
                 </td>
                 <td scope="col">
-                    sample-rating
+                    {{ratin.getAverageRating(note.id)}}
                 </td>
                 <td scope="col">
-                <h4>
+                <h4> <!--Downloading The Note-->
                    <a href="{{url_for('DownloadNote',noteid=note.id)}}">Download Note</a>
                 </h4>
                 </td>

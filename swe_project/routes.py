@@ -110,7 +110,7 @@ def index():
     else:
         print(form.errors)
         print("Form Has Not Been Validated")
-    return render_template('blank.html',form=form,StudentList=Student.getStudent(current_user.university_id),FacultyList=Faculty.getFaculty(current_user.university_id),CourseList=Courses.getCourse(current_user.university_id),StudentCourseList=Student_Course.stucoget(current_user.university_id),CollegeList=College.getCollege(current_user.university_id),DepartmentList=Department.getDepartment(current_user.university_id))
+    return render_template('blank.html',form=form,StudentList=Student.getStudent(current_user.university_id),FacultyList=Faculty.getFaculty(current_user.university_id),CourseList=Courses.getCourse(current_user.university_id),StudentCourseList=Student_Course.getStudentCourse_ofUni(current_user.university_id),CollegeList=College.getCollege(current_user.university_id),DepartmentList=Department.getDepartment(current_user.university_id))
 
 
 ##The route stands for register student to course.
@@ -123,6 +123,7 @@ def addStudentCourseAdmin():
         flash('Student Sucessfully registered to Course!',category='success')
         addStudentCourse(form.student_id.data,form.course_id.data)
     else:
+        flash('The student was not registered to the course. Invalid data entered!','danger')
         print(form.errors)
 
     return render_template('addStudentCourse.html', form=form)
@@ -188,6 +189,7 @@ def addCourseAdmin():
         flash('Course has been added succesfully ', category='success')
         addCourse(current_user.university_id,form.name.data,form.faculty_id.data,form.department_id.data)
     else:
+        flash('The form had errors. Please check data Entered..','danger')
         print(form.errors)
     return render_template('addCourse.html',form=form)
 
@@ -225,11 +227,31 @@ def upload():
         flash('The Note has been added to the database. Professor will approve..', category='success')
     return render_template('upload.html',form=form)
 
+
+@app.route('/ratenote',methods=['GET','POST'])
+@login_required
+def rate():
+    form=RateNoteForm()
+    if form.validate_on_submit():
+        flash('The Note was rated succesfully','success')
+        RateNote(form.NoteID.data,form.Rating.data)
+    else:
+        flash('The rating was not succesful. Please check parameters.')
+    return render_template('ratenote.html',form=form)
+
+def RateNote(note_idd,ratingg): # Adds the rating to that perticular Note.
+    new_rating=Rating(note_id=note_idd,rating=ratingg,student_id=current_user.id)
+    db.session.add(new_rating)
+    db.session.commit()
+
+
+
+
 @app.route('/view-notes-student',methods=['GET','POST'])
 @login_required
 def ViewNote():
     print("Testing Notes Now-->")
-    return render_template('viewnotes.html',NoteList=Student_Course.ReturnApproveNotesStudent(current_user.id),download=DownloadNote(1))
+    return render_template('viewnotes.html',NoteList=Student_Course.ReturnApproveNotesStudent(current_user.id),download=DownloadNote(1),ratin=Rating)
 
 @app.route('/download-notes/<int:noteid>',methods=['GET','POST'])
 @login_required

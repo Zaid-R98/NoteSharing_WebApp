@@ -2,16 +2,12 @@ from swe_project import db, login_manager
 from datetime import datetime
 from flask_login import UserMixin
 
-
-
-
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
 
 class User(db.Model,UserMixin):
     id=db.Column(db.Integer, primary_key=True)
-    #username=db.Column(db.String(25),nullable=False,unique=True)
     password=db.Column(db.String(150),nullable=False)
     email=db.Column(db.String(40),nullable=False,unique=True)
     university_id=db.Column(db.Integer,db.ForeignKey('university.id'),nullable=False)
@@ -35,7 +31,7 @@ class Student(db.Model):
     user_id=db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)
     firstname=db.Column(db.String(20),nullable=False)
     lastname=db.Column(db.String(20),nullable=False)
-    #academic_level=db.Column(db.String(30),nullable=False)           
+          
 
     def getStudent(uni_id):#uni_id is admin uni id
         studentlist=[]
@@ -71,7 +67,7 @@ class University(db.Model):
 class College(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     uni_id=db.Column(db.Integer,db.ForeignKey('university.id'),nullable=False)
-    name=db.Column(db.String(40),nullable=False,unique=True)
+    name=db.Column(db.String(40),nullable=False)
 
     def getCollege(uni_admin_id):
         return College.query.filter_by(uni_id=uni_admin_id).all()
@@ -79,7 +75,7 @@ class College(db.Model):
 class Department(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     uni_id=db.Column(db.Integer,db.ForeignKey('university.id'),nullable=False)
-    name=db.Column(db.String(40),nullable=False,unique=True)
+    name=db.Column(db.String(40),nullable=False)
     college_id=db.Column(db.Integer,db.ForeignKey('college.id'),nullable=False)
 
     def getDepartment(uni_admin_id):
@@ -88,7 +84,7 @@ class Department(db.Model):
 class Courses(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     uni_id=db.Column(db.Integer,db.ForeignKey('university.id'),nullable=False)
-    name=db.Column(db.String(40),nullable=False,unique=True)
+    name=db.Column(db.String(40),nullable=False)
     faculty_id=db.Column(db.Integer,db.ForeignKey('faculty.id'),nullable=False)
     department_id=db.Column(db.Integer,db.ForeignKey('department.id'),nullable=False)
 
@@ -107,16 +103,29 @@ class Rating(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     note_id=db.Column(db.Integer,db.ForeignKey('notes.id'),nullable=False)
     rating=db.Column(db.Integer,nullable=False)
+    student_id=db.Column(db.Integer,db.ForeignKey('student.id'),nullable=False)
 
     def getRatingNote(noteid):
         return int(Rating.query.filter_by(note_id=noteid).first())
+    
+    def getAverageRating(noteID):#Prints the average rating for a given Note
+        R=[]
+        for ra in Rating.query.filter_by(note_id=noteID).all():
+            R.append(ra.rating)
+        if len(R)==0:
+            return 'No Ratings Yet'
+
+        return sum(R)/len(R) #Returns the average of the list of rating for a Note ID
+
+
+
 
 class Student_Course(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     student_id=db.Column(db.Integer,db.ForeignKey('student.id'),nullable=False)
     course_id=db.Column(db.Integer,db.ForeignKey('courses.id'),nullable=False)
 
-    def stucoget(uni_admin_id):
+    def getStudentCourse_ofUni(uni_admin_id):
         student_course_list=[]
         students=Student.getStudent(uni_admin_id)
         for z in students:
