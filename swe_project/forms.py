@@ -81,3 +81,5 @@ class RateNoteForm(FlaskForm):
     NoteID=IntegerField('Enter the ID of the Note', validators=[DataRequired()])
     Rating=IntegerField('Enter your rating from 1 - 5', validators=[DataRequired()])
     submit=SubmitField('Rate Note')
+
+

@@ -1,6 +1,8 @@
 from swe_project import db, login_manager
 from datetime import datetime
 from flask_login import UserMixin
+from io import BytesIO
+from flask import send_file
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -97,6 +99,18 @@ class Notes(db.Model):
     student_id=db.Column(db.Integer,db.ForeignKey('student.id'),nullable=False)
     Note=db.Column(db.LargeBinary,nullable=False)
     approve=db.Column(db.Boolean,nullable=False)
+
+
+    def GetFacultyNotes(Faculty_User_id): #returns all the notes for the courses which the faculty teaches.
+        facid=Faculty.query.filter_by(user_id=Faculty_User_id).first().id
+        cours=Courses.query.filter_by(faculty_id=facid).all()
+        NoteList=[]
+        for n in Notes.query.all():
+            for co in cours:
+                if co.id==n.course_id:
+                    NoteList.append(n)
+        return NoteList
+
 
 
 class Rating(db.Model):

@@ -23,6 +23,8 @@ def login():
             login_user(user)
             if user.uni_admin_check==True:#Uni admin login is seperate
                 return redirect(url_for('index'))
+            if user.st_fa==True:
+                return redirect(url_for('facprofile'))
             return redirect(url_for('profile')) #Normal User Login
         else:
             print(form.errors)
@@ -221,7 +223,7 @@ def upload():
         student=Student.getStudentFromUserID(current_user.id)
         print("STUDENT ID IS "+ str(student.id))
         print("The data from the form is "+ str(form.course_id.data))
-        newFile = Notes(course_id = form.course_id.data, student_id =student.id, Note = file.read(),approve=True)
+        newFile = Notes(course_id = form.course_id.data, student_id =student.id, Note = file.read(),approve=False)
         db.session.add(newFile)
         db.session.commit()
         flash('The Note has been added to the database. Professor will approve..', category='success')
@@ -251,12 +253,39 @@ def RateNote(note_idd,ratingg): # Adds the rating to that perticular Note.
 @login_required
 def ViewNote():
     print("Testing Notes Now-->")
-    return render_template('viewnotes.html',NoteList=Student_Course.ReturnApproveNotesStudent(current_user.id),download=DownloadNote(1),ratin=Rating)
+    return render_template('viewnotes.html',NoteList=Student_Course.ReturnApproveNotesStudent(current_user.id),ratin=Rating)
 
 @app.route('/download-notes/<int:noteid>',methods=['GET','POST'])
 @login_required
 def DownloadNote(noteid):
-    print("CHECK ONE MORE TEST")
+    print("The Note ID IS "+"    "+str(noteid))
     fileData=Notes.query.filter_by(id=noteid).first()
-    return send_file(BytesIO(fileData.Note),attachment_filename='NoteDownload.pdf',as_attachment=True) 
+    return send_file(BytesIO(fileData.Note),attachment_filename='NoteSharingPlatformNote.pdf',as_attachment=True) 
 
+
+
+#---------------------------------------------xxxxxxxxxxxxx---------------------------------------------------------------------
+#Faculty Routes - Profile, approve and Feedback
+
+@app.route('/profile-faculty', methods=['GET','POST'])
+@login_required
+def facprofile():
+    return render_template('profile_faculty.html',NoteList=Notes.GetFacultyNotes(current_user.id))
+
+@app.route('/give-feedback',methods=['GET','POST'])
+@login_required
+def giveFeedback():
+    pass
+
+@app.route('/approve-note/<int:noteID>',methods=['GET','POST'])
+@login_required
+def approveNote(noteID):
+    print("Note ID For Note to be approved is "+ str(noteID))
+    note_to_approve=Notes.query.filter_by(id=noteID).first()
+    if note_to_approve:
+        note_to_approve.approve=True
+        db.session.commit()
+        flash('The Note has been succesfully appoved', 'success')
+    else:
+        flash('Error encountered!','danger')
+    return redirect(url_for('facprofile'))
