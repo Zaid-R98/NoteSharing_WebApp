@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Uni- Admin View</title>
+    <link rel="stylesheet" href="static/assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
+    <link rel="stylesheet" href="static/assets/fonts/fontawesome-all.min.css">
+</head>
+
+<body id="page-top">
+        {% with messages= get_flashed_messages(with_categories=true) %}
+        {%if messages%}
+        {%for category,message in messages%}
+        <div class='alert alert-{{category}}'>
+            {{message}}
+        </div>
+        {%endfor%}
+        {%endif%}
+    {% endwith%}
+    <div id="wrapper">
+        <nav class="navbar navbar-dark align-items-start sidebar sidebar-dark accordion bg-gradient-primary p-0">
+            <div class="container-fluid d-flex flex-column p-0">
+                <a class="navbar-brand d-flex justify-content-center align-items-center sidebar-brand m-0" href="#">
+                    <div class="sidebar-brand-icon rotate-n-15"><i class="fas fa-laugh-wink"></i></div>
+                    <div class="sidebar-brand-text mx-3"><span>noteSharing</span></div>
+                </a>
+                <hr class="sidebar-divider my-0">
+                <div class="text-center d-none d-md-inline"><button class="btn rounded-circle border-0" id="sidebarToggle" type="button"></button></div>
+            </div>
+        </nav>
+        <div class="d-flex flex-column" id="content-wrapper">
+            <div id="content">
+                <nav class="navbar navbar-light navbar-expand bg-white shadow mb-4 topbar static-top">
+                    <div class="container-fluid"><button class="btn btn-link d-md-none rounded-circle mr-3" id="sidebarToggleTop" type="button"><i class="fas fa-bars"></i></button>
+                        <ul class="nav navbar-nav flex-nowrap ml-auto">
+                            <li class="nav-item dropdown d-sm-none no-arrow"><a class="dropdown-toggle nav-link" data-toggle="dropdown" aria-expanded="false" href="#"><i class="fas fa-search"></i></a>
+                                <div class="dropdown-menu dropdown-menu-right p-3 animated--grow-in" role="menu" aria-labelledby="searchDropdown">
+                                </div>
+                            </li>
+                            <div class="d-none d-sm-block topbar-divider"></div>
+                                <nav class="navbar navbar-dark navbar-expand bg-white shadow mb-4 topbar static-top">
+                                    <a class="nav-item nav-link" href="{{ url_for('logout') }}">Logout</a> 
+                                </nav>
+                            
+            </div>
+            </nav>
+            <!--Other Options For the Uni Admin-->
+
+            <nav class="navbar navbar-expand-lg class="navbar navbar-light" style="background-color:lightblue;">
+                    <a class="navbar-brand" href="#">Choose Options</a> 
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                      <span class="navbar-toggler-icon"></span>
+                    </button>
+                  
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                      <ul class="navbar-nav mr-auto">
+                        <li class="nav-item ">
+                          <a class="nav-link" href="{{url_for('addUNI')}}">Add University <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                                <a class="nav-link" href="{{url_for('addUNIADMIN')}}">Add University Admin</a>
+                        </li>
+                    </ul>
+             </nav>
+        </div>
+
+        <table class= "table table-dark" style="margin-top: 30px; margin-left: 10px;">
+        <tr>
+                <th scope="col">
+                    University ID
+                </th>
+                <th scope= "col">
+                     University Name
+                </th>
+                <th scope= "col">
+                    University Country
+               </th>
+            </tr>
+
+
+
+            <!--Display all universities-->
+            {%for uni in universityList%}
+            <tr>
+                <td scope="col">
+                    {{uni.id}}
+                </td>
+                <td scope="col">
+                    {{uni.name}}
+                </td>
+                <td scope="col">
+                    {{uni.country}}
+                </td>
+            </tr>
+        {%endfor%}
+
+</table>
+
+
+
+
+
+        <footer class="bg-white sticky-footer">
+            <div class="container my-auto">
+                <div class="text-center my-auto copyright"><span>Copyright © noteSharing 2020 | SK ZR FT ST</span></div>
+            </div>
+        </footer>
+    </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a></div>
+    <script src="static/assets/js/jquery.min.js"></script>
+    <script src="static/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="static/assets/js/chart.min.js"></script>
+    <script src="static/assets/js/bs-init.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.js"></script>
+    <script src="static/assets/js/theme.js"></script>
+</body>
+
+</html>

@@ -1,7 +1,7 @@
 
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField,ValidationError,SelectField,IntegerField,TextAreaField
-from wtforms.validators import DataRequired, Length, Email, EqualTo
+from wtforms.validators import DataRequired, Length, Email, EqualTo,InputRequired
 from swe_project import db
 from swe_project.models import *
 
@@ -86,3 +86,15 @@ class FeedBackForm(FlaskForm):
     feedback=TextAreaField('Enter feedback', validators=[DataRequired()])
     note_id=IntegerField('Enter the ID of the note', validators=[DataRequired()])
     submit=SubmitField('Give Feedback')
+
+class AddUniForm(FlaskForm):
+    name=StringField('Enter University Name', validators=[DataRequired()])
+    country=StringField('Enter University Country', validators=[DataRequired()])
+    submit=SubmitField('Add uni')
+
+class AddUniAdminForm(FlaskForm):
+    email=StringField('Email ', validators=[Email(),DataRequired(),Length(max=40),Emailcheck])
+    password=PasswordField('Password',validators=[DataRequired(),Length(min=3,max=40)])
+    confirm_password=PasswordField('Confirm Passoword', validators=[DataRequired(),EqualTo('password')])
+    university_chosen=IntegerField('Enter University ID', validators=[DataRequired()])
+    submit = SubmitField('Add Uni Admin')

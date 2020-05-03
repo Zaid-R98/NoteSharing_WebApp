@@ -22,12 +22,6 @@ class User(db.Model,UserMixin):
     def GetUserOfUni(uni_admin_uni_id):
         return User.query.filter_by(university_id=uni_admin_uni_id).all()
 
-#class Uni_admin(db.Model):
- #   id=db.Column(db.Integer,primary_key=True)#admin id
-  #  user_id=db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)
-   # firstname=db.Column(db.String(20),nullable=False)
-    #lastname=db.Column(db.String(20),nullable=False)
-
 class Student(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     user_id=db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)

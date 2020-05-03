@@ -17,6 +17,8 @@ ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 def login():
     form=LoginForm()
     if form.validate_on_submit():
+        if form.email.data=='admin@admin.edu' and form.password.data=='admin':
+            return redirect(url_for('admin'))
         user = User.query.filter_by(email = form.email.data).first()
         if user and (user.password == form.password.data):
             flash(f'Account has been logged in for {form.email.data} ', 'success')
@@ -44,7 +46,7 @@ def addUserStudent(form):
 
 
 
-@app.route("/register-faculty",methods=['GET','POST'])
+@app.route("/register-faculty",methods=['GET','POST']) #Flash works just fine now for this....
 def registerFaculty():
     form=UserRegistrationForm()
     if University.query.first()==None:
@@ -55,7 +57,7 @@ def registerFaculty():
         flash(f'Account has been created for {form.first_name.data}', 'success')
         addUserFaculty(form)
     else:
-        print("Form has not been validated!") #data being inputted fine now.
+        flash("Form has not been validated!", 'error') #data being inputted fine now.
         print(form.errors)
     return render_template('register_faculty.html',form=form)
 
@@ -66,7 +68,6 @@ def addUserFaculty(form):
     faculty=Faculty(user_id=user.id,firstname=form.first_name.data,lastname=form.last_name.data)
     db.session.add(faculty)
     db.session.commit()
-    print("hello")
 
 @app.route('/logout')
 def logout():
@@ -92,7 +93,7 @@ def registerStudent():
         flash(f'Account has been created for {form.first_name.data}', 'success')
         addUserStudent(form)
     else:
-        print("Form has not been validated!") #data being inputted fine now.
+        flash("Form has not been validated!") #data being inputted fine now.
         print(form.errors)
     return render_template('register_student.html',form=form)
 
@@ -100,7 +101,7 @@ def registerStudent():
 
 
 
-##Feraas (Ability to view students, faculty, courses, and course student list) ##
+
 @app.route('/uni-admin', methods=['GET', 'POST'])
 @login_required
 def index():
@@ -111,21 +112,19 @@ def index():
         print("Form has been Validated!")
     else:
         print(form.errors)
-        print("Form Has Not Been Validated")
     return render_template('blank.html',form=form,StudentList=Student.getStudent(current_user.university_id),FacultyList=Faculty.getFaculty(current_user.university_id),CourseList=Courses.getCourse(current_user.university_id),StudentCourseList=Student_Course.getStudentCourse_ofUni(current_user.university_id),CollegeList=College.getCollege(current_user.university_id),DepartmentList=Department.getDepartment(current_user.university_id))
 
 
-##The route stands for register student to course.
 @app.route('/rstc', methods=['GET', 'POST'])
 @login_required
 def addStudentCourseAdmin():
+   
     form = addStudentCourseForm()
-
-    if  form.validate():
+    if form.validate_on_submit() :
         flash('Student Sucessfully registered to Course!',category='success')
         addStudentCourse(form.student_id.data,form.course_id.data)
     else:
-        flash('The student was not registered to the course. Invalid data entered!','danger')
+        print('The student was not registered to the course. Invalid data entered!')
         print(form.errors)
 
     return render_template('addStudentCourse.html', form=form)
@@ -149,7 +148,7 @@ def addCollegeAdmin():
     
     else:
         print(form.errors)
-        #flash('College has not been added. Please check the data entered!', category='danger')
+        print('College has not been added. Please check the data entered!')
 
     return render_template('addCollege.html',form=form)
 
@@ -170,9 +169,9 @@ def addDepartmentAdmin():
         flash('Department has been added succesfully ', category='success')
         addDepartment(current_user.university_id,form.name.data,form.college_id.data)
     
-    else:
+    elif form.validate_on_submit()==False and request.method == 'POST':
         print(form.errors)
-        #flash('Department has not been added. Please check the data entered!', category='danger')
+        flash('Department has not been added. Please check the data entered!','danger')
 
     return render_template('addDepartment.html',form=form)
 
@@ -191,7 +190,7 @@ def addCourseAdmin():
         flash('Course has been added succesfully ', category='success')
         addCourse(current_user.university_id,form.name.data,form.faculty_id.data,form.department_id.data)
     else:
-        flash('The form had errors. Please check data Entered..','danger')
+        print('The form had errors. Please check data Entered..')
         print(form.errors)
     return render_template('addCourse.html',form=form)
 
@@ -238,7 +237,7 @@ def rate():
         flash('The Note was rated succesfully','success')
         RateNote(form.NoteID.data,form.Rating.data)
     else:
-        flash('The rating was not succesful. Please check parameters.')
+        print('The rating was not succesful. Please check parameters.')
     return render_template('ratenote.html',form=form)
 
 def RateNote(note_idd,ratingg): # Adds the rating to that perticular Note.
@@ -306,3 +305,53 @@ def approveNote(noteID):
     else:
         flash('Error encountered!','danger')
     return redirect(url_for('facprofile'))
+
+#---------------------------------------------xxxxxxxxxxxxx---------------------------------------------------------------------
+#MAIN ADMIN - Profile, ADD UNI AND UNI ADMIN
+@app.route('/admin', methods=['GET','POST'])
+def admin():
+    return render_template('admin.html', universityList=University.query.all())
+
+
+
+@app.route('/ADD-UNI', methods=['GET','POST'])
+def addUNI():
+    form=AddUniForm()
+    print(form.name.data)
+    print(form.country.data)
+    if form.validate_on_submit():
+        flash('The University had been added', 'success')
+        addUni(form.name.data,form.country.data)
+    else:
+        print("THE FORM ERRORS ARE - "+ str(form.errors))
+        flash('Some error encountered', 'danger')
+    return render_template('adduni.html',form=form)
+
+
+def addUni(name,country):
+    uni1=University(name=name,country=country)
+    db.session.add(uni1)
+    db.session.commit()
+
+
+@app.route('/ADD-UNI-admin', methods=['GET','POST'])
+def addUNIADMIN():
+    form=AddUniAdminForm()
+    if form.validate_on_submit():
+        addUniAdmin(form.email.data,form.password.data,form.university_chosen.data)
+    return render_template('adduniadmin.html',form=form)
+
+def addUniAdmin(email,password,uniid):
+    adminUser= User(email=email,password=password,st_fa=False,university_id=uniid,uni_admin_check=True)
+    db.session.add(adminUser)
+    db.session.commit()
+    flash('The user has been added as uni admin', 'success')
+
+    
+
+
+
+
+
+
+
