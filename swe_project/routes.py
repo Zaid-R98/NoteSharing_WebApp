@@ -324,7 +324,7 @@ def addUNI():
         addUni(form.name.data,form.country.data)
     else:
         print("THE FORM ERRORS ARE - "+ str(form.errors))
-        flash('Some error encountered', 'danger')
+        print('Some error encountered')
     return render_template('adduni.html',form=form)
 
 
