@@ -228,6 +228,36 @@ def upload():
         flash('The Note has been added to the database. Professor will approve..', category='success')
     return render_template('upload.html',form=form)
 
+@app.route('/view-notes-student',methods=['GET','POST'])
+@login_required
+def ViewNote():
+    print("Testing Notes Now-->")
+    return render_template('viewnotes.html',NoteList=Student_Course.ReturnApproveNotesStudent(current_user.id),ratin=Rating)
+
+
+
+
+@app.route('/download-notes/<int:noteid>',methods=['GET','POST'])
+@login_required
+def DownloadNote(noteid):
+    print("The Note ID IS "+"    "+str(noteid))
+    fileData=Notes.query.filter_by(id=noteid).first()
+    return send_file(BytesIO(fileData.Note),attachment_filename='NoteSharingPlatformNote.pdf',as_attachment=True) 
+
+@app.route('/approve-note/<int:noteID>',methods=['GET','POST'])
+@login_required
+def approveNote(noteID):
+    print("Note ID For Note to be approved is "+ str(noteID))
+    note_to_approve=Notes.query.filter_by(id=noteID).first()
+    if note_to_approve:
+        note_to_approve.approve=True
+        db.session.commit()
+        flash('The Note has been succesfully appoved', 'success')
+    else:
+        flash('Error encountered!','danger')
+    return redirect(url_for('facprofile'))
+
+    
 
 @app.route('/ratenote',methods=['GET','POST'])
 @login_required
@@ -246,20 +276,6 @@ def RateNote(note_idd,ratingg): # Adds the rating to that perticular Note.
     db.session.commit()
 
 
-
-
-@app.route('/view-notes-student',methods=['GET','POST'])
-@login_required
-def ViewNote():
-    print("Testing Notes Now-->")
-    return render_template('viewnotes.html',NoteList=Student_Course.ReturnApproveNotesStudent(current_user.id),ratin=Rating)
-
-@app.route('/download-notes/<int:noteid>',methods=['GET','POST'])
-@login_required
-def DownloadNote(noteid):
-    print("The Note ID IS "+"    "+str(noteid))
-    fileData=Notes.query.filter_by(id=noteid).first()
-    return send_file(BytesIO(fileData.Note),attachment_filename='NoteSharingPlatformNote.pdf',as_attachment=True) 
 
 @app.route('/view-feedback',methods=['GET','POST'])
 @login_required
@@ -292,19 +308,6 @@ def applyfeedback(noteiz,fid,feedbak):
     db.session.add(feedback)
     db.session.commit()
     flash('Feedback was succesfully given...','success')
-
-@app.route('/approve-note/<int:noteID>',methods=['GET','POST'])
-@login_required
-def approveNote(noteID):
-    print("Note ID For Note to be approved is "+ str(noteID))
-    note_to_approve=Notes.query.filter_by(id=noteID).first()
-    if note_to_approve:
-        note_to_approve.approve=True
-        db.session.commit()
-        flash('The Note has been succesfully appoved', 'success')
-    else:
-        flash('Error encountered!','danger')
-    return redirect(url_for('facprofile'))
 
 #---------------------------------------------xxxxxxxxxxxxx---------------------------------------------------------------------
 #MAIN ADMIN - Profile, ADD UNI AND UNI ADMIN
@@ -346,12 +349,3 @@ def addUniAdmin(email,password,uniid):
     db.session.add(adminUser)
     db.session.commit()
     flash('The user has been added as uni admin', 'success')
-
-    
-
-
-
-
-
-
-
