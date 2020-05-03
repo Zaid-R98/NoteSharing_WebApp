@@ -262,6 +262,12 @@ def DownloadNote(noteid):
     fileData=Notes.query.filter_by(id=noteid).first()
     return send_file(BytesIO(fileData.Note),attachment_filename='NoteSharingPlatformNote.pdf',as_attachment=True) 
 
+@app.route('/view-feedback',methods=['GET','POST'])
+@login_required
+def viewfeedback():
+    print("Student view feedback function now ...")
+    return render_template('studentfeedback.html',FeedBackList=Feedback.fbl(current_user.id))
+
 
 
 #---------------------------------------------xxxxxxxxxxxxx---------------------------------------------------------------------
@@ -275,7 +281,18 @@ def facprofile():
 @app.route('/give-feedback',methods=['GET','POST'])
 @login_required
 def giveFeedback():
-    pass
+    form=FeedBackForm()
+    if form.validate_on_submit():
+        applyfeedback(form.note_id.data,current_user.id,form.feedback.data)
+    else:
+        flash('The form was not validated...','warning')
+    return render_template('feedback.html',form=form)
+
+def applyfeedback(noteiz,fid,feedbak):
+    feedback=Feedback(note_id=noteiz,faculty_id=fid,feedback=feedbak)
+    db.session.add(feedback)
+    db.session.commit()
+    flash('Feedback was succesfully given...','success')
 
 @app.route('/approve-note/<int:noteID>',methods=['GET','POST'])
 @login_required

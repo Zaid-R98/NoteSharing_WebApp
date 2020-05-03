@@ -22,11 +22,11 @@ class User(db.Model,UserMixin):
     def GetUserOfUni(uni_admin_uni_id):
         return User.query.filter_by(university_id=uni_admin_uni_id).all()
 
-class Uni_admin(db.Model):
-    id=db.Column(db.Integer,primary_key=True)#admin id
-    user_id=db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)
-    firstname=db.Column(db.String(20),nullable=False)
-    lastname=db.Column(db.String(20),nullable=False)
+#class Uni_admin(db.Model):
+ #   id=db.Column(db.Integer,primary_key=True)#admin id
+  #  user_id=db.Column(db.Integer,db.ForeignKey('user.id'),nullable=False)
+   # firstname=db.Column(db.String(20),nullable=False)
+    #lastname=db.Column(db.String(20),nullable=False)
 
 class Student(db.Model):
     id=db.Column(db.Integer,primary_key=True)
@@ -186,5 +186,20 @@ class Student_Course(db.Model):
                 approveNotes.append(note)
         
         return approveNotes
+
+class Feedback(db.Model):
+    id=db.Column(db.Integer,primary_key=True)
+    note_id=db.Column(db.Integer,db.ForeignKey('notes.id'),nullable=False)
+    faculty_id=db.Column(db.Integer,db.ForeignKey('faculty.id'),nullable=False)
+    feedback=db.Column(db.String(500),nullable=False)
+
+    def fbl(student_user_id): #Returns all the feedback for a given student.
+        student=Student.query.filter_by(user_id=student_user_id).first()
+        Feedbackstudent=[]
+        for n in Notes.query.filter_by(student_id=student.id):
+            for f in Feedback.query.all():
+                if f.note_id==n.id:
+                    Feedbackstudent.append(f)
+        return Feedbackstudent
 
 

@@ -1,6 +1,6 @@
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField,ValidationError,SelectField,IntegerField
+from wtforms import StringField, PasswordField, SubmitField, BooleanField,ValidationError,SelectField,IntegerField,TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 from swe_project import db
 from swe_project.models import *
@@ -82,4 +82,7 @@ class RateNoteForm(FlaskForm):
     Rating=IntegerField('Enter your rating from 1 - 5', validators=[DataRequired()])
     submit=SubmitField('Rate Note')
 
-
+class FeedBackForm(FlaskForm):
+    feedback=TextAreaField('Enter feedback', validators=[DataRequired()])
+    note_id=IntegerField('Enter the ID of the note', validators=[DataRequired()])
+    submit=SubmitField('Give Feedback')
