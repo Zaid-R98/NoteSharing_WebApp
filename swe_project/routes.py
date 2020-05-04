@@ -217,15 +217,18 @@ def profile():
 @login_required
 def upload():
     form=UploadNotesForm()
-    if request.method == 'POST':
-        file = request.files['inputFile'] 
-        student=Student.getStudentFromUserID(current_user.id)
-        print("STUDENT ID IS "+ str(student.id))
-        print("The data from the form is "+ str(form.course_id.data))
-        newFile = Notes(course_id = form.course_id.data, student_id =student.id, Note = file.read(),approve=False)
-        db.session.add(newFile)
-        db.session.commit()
-        flash('The Note has been added to the database. Professor will approve..', category='success')
+    if request.method == 'POST' and form.validate_on_submit():
+        file = request.files['inputFile']
+        if file.filename[(len(file.filename)-3):(len(file.filename))]!='pdf':
+            flash('Only PDF files can be uploaded..','danger')
+        else:
+            student=Student.getStudentFromUserID(current_user.id)
+            print("STUDENT ID IS "+ str(student.id))
+            print("The data from the form is "+ str(form.course_id.data))
+            newFile = Notes(course_id = form.course_id.data, student_id =student.id, Note = file.read(),approve=False)
+            db.session.add(newFile)
+            db.session.commit()
+            flash('The Note has been added to the database. Professor will approve..', category='success')
     return render_template('upload.html',form=form)
 
 @app.route('/view-notes-student',methods=['GET','POST'])

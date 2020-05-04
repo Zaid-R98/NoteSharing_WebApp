@@ -54,7 +54,18 @@
                             <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                             <div class = "container">
                                     {{form.course_id.label}}
-                                    {{form.course_id}}
+                                    {%if form.errors%}
+                                    {{ form.course_id(class="form-control form-control-user form-control-lg is-invalid") }}
+                                    <div class = “invalid-feedback”>
+                                    {%for error in form.course_id.errors%}
+                                    <span>
+                                    {{error}}
+                                    <span>
+                                    {%endfor%}
+                                    </div>
+                                    {%else%}
+                                     {{form.course_id}}
+                                    {%endif%}
                                 <input type='file' name='inputFile'>
                                <!--<input type=submit value=Upload>--> 
                                 <div class="form-group align-middle">

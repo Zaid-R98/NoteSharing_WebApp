@@ -121,3 +121,16 @@ def checkNotes_ID_Fac(FlaskForm,field):
                        check=True
        if check==False:
                 raise ValidationError('You do not teach this course..')
+
+#Upload Notes Validators-
+
+def checkNote_ID_Stu(FlaskForm,field):
+        print("It reaches here")
+        CourseList=Student_Course.studentcourselist(current_user.id)
+        check=False
+        for n in CourseList:
+               print(str(n.id))
+               if n.id==field.data:
+                       check=True
+        if check==False:
+                raise ValidationError('You do not take this course..')
