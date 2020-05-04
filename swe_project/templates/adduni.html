@@ -44,19 +44,37 @@
                 <form method="POST" action=" ">
                         {{form.hidden_tag()}}
             
-                        <!--Add Department-->
+                        <!--Add Uni-->
                         
                         <div class="form-group row">
                             <div class="col-sm-6 mb-3 mb-sm-0">
-                                    <!--Department Name-->
+                                    <!--Uni Name-->
                                 {{form.name.label}}
+                                {% if form.errors %}
+                                {{form.name(class="form-control form-control-user form-control-lg is-invalid")}}
+                                <div class="invalid-feedback">
+                                    {% for error in form.name.errors %}
+                                    <span>{{error}}</span>
+                                    {%endfor%}
+                                </div>
+                                {%else%}
                                 {{form.name(class="form-control form-control-user")}}
+                                {%endif%}
                          </div>
 
                          <div class="col-sm-6 mb-3 mb-sm-0">
-                                <!--College ID-->
+                                <!--Uni country-->
                             {{form.country.label}}
-                            {{form.country(class="form-control form-control-user")}}
+                            {% if form.errors %}
+                              {{form.country(class="form-control form-control-user form-control-lg is-invalid")}}
+                                <div class="invalid-feedback">
+                                    {% for error in form.country.errors %}
+                                    <span>{{error}}</span>
+                                    {%endfor%}
+                                </div>
+                                    {%else%}
+                                {{form.country(class="form-control form-control-user")}}
+                            {%endif%}
                          </div>
             </div>
 

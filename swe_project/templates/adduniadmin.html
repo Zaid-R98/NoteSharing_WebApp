@@ -50,22 +50,70 @@
                         <div class="col-sm-6 mb-3 mb-sm-0">
                                     
                                 {{form.email.label}}
+                                {%if form.errors%}
+                                {{ form.email(class="form-control form-control-user form-control-lg is-invalid") }}
+            <div class = “invalid feedback”>
+                {%for error in form.email.errors%}
+                    <span>
+                        {{error}}
+                            <span>
+                                    {%endfor%}
+                            </div>
+                                {%else%}
+
                                 {{form.email(class="form-control form-control-user")}}
+                                {%endif%}
                          </div>
                          <div class="col-sm-6 mb-3 mb-sm-0">
                                     
                                 {{form.password.label}}
+                                {%if form.errors%}
+                             {{ form.password(class="form-control form-control-user form-control-lg is-invalid") }}
+                                <div class = “invalid feedback”>
+                                {%for error in form.password.errors%}
+                                <span>
+                                {{error}}
+                                <span>
+                                {%endfor%}
+                                </div>
+                                {%else%}
+
                                 {{form.password(class="form-control form-control-user")}}
+                                {%endif%}
                          </div>
                          <div class="col-sm-6 mb-3 mb-sm-0">
                                     
                                 {{form.confirm_password.label}}
+                                {%if form.errors%}
+                                {{ form.confirm_password(class="form-control form-control-user form-control-lg is-invalid") }}
+                                    <div class = “invalid feedback”>
+                                    {%for error in form.confirm_password.errors%}
+                                    <span>
+                                    {{error}}
+                                    <span>
+                                    {%endfor%}
+                                    </div>
+                                    {%else%}
+
                                 {{form.confirm_password(class="form-control form-control-user")}}
+                                {%endif%}
                          </div>
                          <div class="col-sm-6 mb-3 mb-sm-0">
                                     
                                 {{form.university_chosen.label}}
+                                {%if form.errors%}
+                                {{ form.university_chosen(class="form-control form-control-user form-control-lg is-invalid") }}
+                                <div class = “invalid feedback”>
+                                {%for error in form.university_chosen.errors%}
+                                <span>
+                                {{error}}
+                                <span>
+                                {%endfor%}
+                                </div>
+                                {%else%}
+
                                 {{form.university_chosen(class="form-control form-control-user")}}
+                                {%endif%}
                          </div>
                         
             </div>

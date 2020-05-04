@@ -50,7 +50,19 @@
                             <div class="col-sm-6 mb-3 mb-sm-0">
                                     <!--College Name-->
                                 {{form.name.label}}
+                                {%if form.errors%}
+{{form.name(class=“form control form-control-user form-control-lg is-invalid”)}}
+<div class = “invalid feedback”>
+{%for error in form.name.errors%}
+<span>
+{{error}}
+<span>
+{%endfor%}
+</div>
+{%else%}
+
                                 {{form.name(class="form-control form-control-user")}}
+                                {%endif%}
                          </div>
                         
                          

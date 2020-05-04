@@ -4,7 +4,7 @@ from wtforms import StringField, PasswordField, SubmitField, BooleanField,Valida
 from wtforms.validators import DataRequired, Length, Email, EqualTo,InputRequired
 from swe_project import db
 from swe_project.models import *
-
+from flask import flash
 
 
 def Namecheck(FlaskForm,field): 
@@ -58,9 +58,12 @@ class addStudentCourseForm(FlaskForm): #Register Student To Course to Student Co
 
 
 class AddCollegeForm(FlaskForm):
-    name= StringField('Enter the Name of the New College..',validators=[DataRequired()])
+    name= StringField('Enter the Name of the New College..',validators=[DataRequired(),unicountry_check,checkUniname])
     submit=SubmitField('Add College')
 
+def checkUniname(FlaskForm,field):
+    if len(field.data)>40:
+        raise ValidationError('The length cannot be more than 40...')
 
 class AddDepartmentForm(FlaskForm):
     name= StringField('Enter the Name of the New Department..',validators=[DataRequired()])
@@ -87,14 +90,40 @@ class FeedBackForm(FlaskForm):
     note_id=IntegerField('Enter the ID of the note', validators=[DataRequired()])
     submit=SubmitField('Give Feedback')
 
+
+#Add Uni Validator
+def unicountry_check(FlaskForm,field):
+    if field.data.isdigit():
+        raise ValidationError("The field cannot be a number")
+
 class AddUniForm(FlaskForm):
-    name=StringField('Enter University Name', validators=[DataRequired()])
-    country=StringField('Enter University Country', validators=[DataRequired()])
+    name=StringField('Enter University Name', validators=[DataRequired(),unicountry_check])
+    country=StringField('Enter University Country', validators=[DataRequired(),unicountry_check])
     submit=SubmitField('Add uni')
 
+
+#add Uni admin validators
+def uni_id_check(FlaskForm,field):
+    lsttocheck=University.query.get(field.data)
+    if lsttocheck:
+        pass
+    else:
+        flash('Check fields for error..!', 'danger')
+        raise ValidationError('This university ID not exist')
+
+def duplicate_id_check(FlaskForm,field):
+    for un in User.query.all():
+        if un.uni_admin_check==True and un.university_id==field.data:
+            raise ValidationError("This university has already been assigned!")
+
+def duplicate_useremail_check(FlaskForm,field):
+    for un in User.query.all():
+        if un.email==field.data:
+            raise ValidationError("The ID already belongs to a user..!")
+
 class AddUniAdminForm(FlaskForm):
-    email=StringField('Email ', validators=[Email(),DataRequired(),Length(max=40),Emailcheck])
+    email=StringField('Email ', validators=[Email(),DataRequired(),Length(max=40),Emailcheck,duplicate_useremail_check])
     password=PasswordField('Password',validators=[DataRequired(),Length(min=3,max=40)])
     confirm_password=PasswordField('Confirm Passoword', validators=[DataRequired(),EqualTo('password')])
-    university_chosen=IntegerField('Enter University ID', validators=[DataRequired()])
+    university_chosen=IntegerField('Enter University ID', validators=[DataRequired(),uni_id_check,duplicate_id_check])
     submit = SubmitField('Add Uni Admin')
