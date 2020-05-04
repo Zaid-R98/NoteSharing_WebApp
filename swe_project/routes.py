@@ -299,8 +299,6 @@ def giveFeedback():
     form=FeedBackForm()
     if form.validate_on_submit():
         applyfeedback(form.note_id.data,current_user.id,form.feedback.data)
-    else:
-        flash('The form was not validated...','warning')
     return render_template('feedback.html',form=form)
 
 def applyfeedback(noteiz,fid,feedbak):

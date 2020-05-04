@@ -50,13 +50,37 @@
                             <div class="col-sm-6 mb-3 mb-sm-0">
                                     <!--Student ID-->
                                 {{form.student_id.label}}
+                                {%if form.errors%}
+                                {{ form.student_id(class="form-control form-control-user form-control-lg is-invalid") }}
+                                <div class = “invalid-feedback”>
+                                {%for error in form.student_id.errors%}
+                                <span>
+                                {{error}}
+                                <span>
+                                {%endfor%}
+                                </div>
+                                {%else%}
+
                                 {{form.student_id(class="form-control form-control-user")}}
+                                {%endif%}
                          </div>
 
                          <div class="col-sm-6 mb-3 mb-sm-0">
                                 <!--Course ID-->
                             {{form.course_id.label}}
+                            {%if form.errors%}
+                            {{ form.course_id(class="form-control form-control-user form-control-lg is-invalid") }}
+                            <div class = “invalid-feedback”>
+                            {%for error in form.course_id.errors%}
+                            <span>
+                            {{error}}
+                            <span>
+                            {%endfor%}
+                            </div>
+                            {%else%}
+
                             {{form.course_id(class="form-control form-control-user")}}
+                            {%endif%}
                          </div>
             </div>
 

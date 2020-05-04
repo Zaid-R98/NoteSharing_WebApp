@@ -50,12 +50,34 @@
                             <div class="col-sm-6 mb-3 mb-sm-0">
                                     <!--Feedback-->
                                 {{form.feedback.label}}
+                                {%if form.errors%}
+                                {{ form.feedback(class="form-control form-control-user form-control-lg is-invalid") }}
+                                <div class = “invalid-feedback”>
+                                {%for error in form.feedback.errors%}
+                                <span>
+                                {{error}}
+                                <span>
+                                {%endfor%}
+                                </div>
+                                {%else%}
                                 {{form.feedback(class="form-control form-control-user")}}
+                                {%endif%}
                          </div>
                          <div class="col-sm-6 mb-3 mb-sm-0">
                             <!--Note_ID-->
                         {{form.note_id.label}}
+                                                    {%if form.errors%}
+                            {{ form.note_id(class="form-control form-control-user form-control-lg is-invalid") }}
+                            <div class = “invalid-feedback”>
+                            {%for error in form.note_id.errors%}
+                            <span>
+                            {{error}}
+                            <span>
+                            {%endfor%}
+                            </div>
+                            {%else%}
                         {{form.note_id(class="form-control form-control-user")}}
+                        {%endif%}
                  </div>
             </div>
 
