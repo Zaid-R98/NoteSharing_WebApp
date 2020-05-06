@@ -60,6 +60,9 @@ class University(db.Model):
     name=db.Column(db.String(40),nullable=False,unique=True)
     country=db.Column(db.String(40),nullable=False)
 
+    def getUNIVERSITY(id):
+        return University.query.filter_by(id=id).first()
+
 class College(db.Model):
     id=db.Column(db.Integer,primary_key=True)
     uni_id=db.Column(db.Integer,db.ForeignKey('university.id'),nullable=False)
