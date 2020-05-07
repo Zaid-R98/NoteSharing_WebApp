@@ -33,7 +33,7 @@
                             <div class="col-lg-6">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h4 class="text-dark mb-4">Login</h4>
+                                        <h4 class="text-dark mb-4">Reset Password</h4>
                                     </div>
                                     <form class="user" method="POST" action="">
                                             {{form.hidden_tag()}}
@@ -50,34 +50,11 @@
                                                 {{ form.email(class="form-control form-control-lg") }}
                                             {% endif %}
                                         </div>
-                                        <div class="form-group">
-                                            {{ form.password.label(class="form-control-label") }}
-                                            {% if form.password.errors %}
-                                                {{ form.password(class="form-control form-control-user form-control-lg is-invalid") }}
-                                                <div class="invalid-feedback">
-                                                    {% for error in form.password.errors %}
-                                                        <span>{{ error }}</span>
-                                                    {% endfor %}
-                                                </div>
-                                            {% else %}
-                                                {{ form.password(class="form-control form-control-lg") }}
-                                            {% endif %}
-                                        </div>
-                                        <div class="form-group">
-                                            <div class="custom-control custom-checkbox small">
-                                                <div class="form-check">
-                                                  
-                                                   
-                                                </div>
-                                            </div>
-                                        </div>
+                                    
                                         {{ form.submit(class="btn btn-primary btn-block text-white btn-user") }}
                                         <hr>
                                     </form>
                                 
-                                    <div class="text-center"><a class="small" href="{{url_for('reset_request')}}">Forgot Password?</a></div>
-                                    <div class="text-center"><a class="small" href="{{ url_for('registerStudent') }}">Create a Student Account!</a></div>
-                                    <div class="text-center"><a class="small" href="{{ url_for('registerFaculty') }}">Create a Faculty Account!</a></div>
                                 </div>
                             </div>
                         </div>

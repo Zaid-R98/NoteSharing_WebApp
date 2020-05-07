@@ -1,8 +1,9 @@
-from swe_project import db, login_manager
+from swe_project import db, login_manager,app
 from datetime import datetime
 from flask_login import UserMixin
 from io import BytesIO
 from flask import send_file
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -15,6 +16,10 @@ class User(db.Model,UserMixin):
     university_id=db.Column(db.Integer,db.ForeignKey('university.id'),nullable=False)
     st_fa=db.Column(db.Boolean,nullable=False) #True if Faculty
     uni_admin_check=db.Column(db.Boolean,nullable=False)#True if Uniadmin
+
+    def get_reset_token(self, expires_sec=1800):
+        s = Serializer(app.config['SECRET_KEY'], expires_sec)
+        return s.dumps({'user_id': self.id}).decode('utf-8')
 
     def GetUser(id):
         return User.query.filter_by(id=id).all()
