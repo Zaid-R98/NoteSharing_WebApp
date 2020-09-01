@@ -6,7 +6,7 @@ from swe_project.config import databse_uri,configkey
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = configkey
-app.config['SQLALCHEMY_DATABASE_URI']=databse_uri
+app.config['SQLALCHEMY_DATABASE_URI']=databse_uri # Config key hidden. Will push in a future update to allow running on other machines.
 db=SQLAlchemy(app)
 login_manager=LoginManager(app) 
 login_manager.login_view = 'login'
