@@ -1,5 +1,11 @@
 
-## Software Engineering Project*
+## Software Engineering Project
+
+**Tech used to build this project:**
+ - Flask Web Framework
+ - HTML5, Bootstrap, JavaScript
+ - PostgresSQL
+
 
 **To run the Project:**
  - Install Python on your local machine
